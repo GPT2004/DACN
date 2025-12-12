@@ -1,0 +1,375 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model roles {
+  id          Int      @id @default(autoincrement())
+  name        String   @unique @db.VarChar(50)
+  description String?
+  created_at  DateTime @default(now()) @db.Timestamptz(6)
+  users       users[]
+}
+
+model users {
+  id            Int             @id @default(autoincrement())
+  email         String?         @unique @db.VarChar(255)
+  password      String?         @db.VarChar(255)
+  full_name     String          @db.VarChar(255)
+  phone         String?         @db.VarChar(50)
+  dob           DateTime?       @db.Date
+  avatar_url    String?
+  is_active     Boolean?        @default(true)
+  role_id       Int
+  created_at    DateTime        @default(now()) @db.Timestamptz(6)
+  updated_at    DateTime        @default(now()) @db.Timestamptz(6)
+  deleted_at    DateTime?       @db.Timestamptz(6)
+  appointments  appointments[]  @relation("user_appointments")
+  doctors       doctors?
+  notifications notifications[]
+  notified_prescriptions prescriptions[]
+  patients      patients?
+  ownedPatients patients[]      @relation("patientOwner")
+  role          roles           @relation(fields: [role_id], references: [id], onUpdate: NoAction)
+}
+
+model doctors {
+  id               Int               @id @default(autoincrement())
+  user_id          Int               @unique
+  license_number   String?           @db.VarChar(100)
+  specialties      String[]
+  bio              String?
+  gender           String?           @db.VarChar(20)
+  address          String?           @db.Text
+  consultation_fee Int?
+  rating           Decimal?          @default(0) @db.Decimal(3, 2)
+  created_at       DateTime          @default(now()) @db.Timestamptz(6)
+  updated_at       DateTime          @default(now()) @db.Timestamptz(6)
+  appointments     appointments[]
+  user             users             @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  lab_orders       lab_orders[]
+  medical_records  medical_records[]
+  prescriptions    prescriptions[]
+  schedules        schedules[]
+  timeslots        timeslots[]
+  doctorSpecialties doctor_specialties[]
+  reviews          doctor_reviews[]
+}
+
+// New specialties table: separate entity to store metadata about each specialty
+model specialties {
+  id          Int                      @id @default(autoincrement())
+  name        String                   @unique @db.VarChar(255)
+  slug        String?                  @unique @db.VarChar(255)
+  description String?
+  image_url   String?
+  created_at  DateTime                 @default(now()) @db.Timestamptz(6)
+  updated_at  DateTime                 @default(now()) @db.Timestamptz(6)
+  deleted_at  DateTime?                @db.Timestamptz(6)
+
+  doctorSpecialties doctor_specialties[]
+}
+
+// Join table for many-to-many between doctors and specialties
+model doctor_specialties {
+  id           Int        @id @default(autoincrement())
+  doctor_id    Int
+  specialty_id Int
+  created_at   DateTime   @default(now()) @db.Timestamptz(6)
+
+  doctor       doctors    @relation(fields: [doctor_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  specialty    specialties @relation(fields: [specialty_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@unique([doctor_id, specialty_id], name: "uq_doctor_specialty")
+  @@index([specialty_id], map: "idx_doctorspecialty_specialty")
+  @@index([doctor_id], map: "idx_doctorspecialty_doctor")
+}
+
+model patients {
+  id                Int               @id @default(autoincrement())
+  user_id           Int?              @unique
+  owner_user_id     Int?
+  full_name         String?           @db.VarChar(255)
+  phone             String?           @db.VarChar(50)
+  email             String?           @db.VarChar(255)
+  dob               DateTime?         @db.Date
+  gender            String?           @db.VarChar(20)
+  blood_type        String?           @db.VarChar(10)
+  allergies         String?
+  address           String?           @db.Text
+  emergency_contact Json?
+  // Extended profile fields
+  occupation        String?           @db.VarChar(255)
+  id_type           String?           @db.VarChar(50)
+  id_number         String?           @db.VarChar(100)
+  id_issue_date     DateTime?         @db.Date
+  id_issue_place    String?           @db.VarChar(255)
+  nationality       String?           @db.VarChar(100)
+  ethnicity         String?           @db.VarChar(100)
+  zalo              Boolean?          @default(false)
+  created_at        DateTime          @default(now()) @db.Timestamptz(6)
+  updated_at        DateTime          @default(now()) @db.Timestamptz(6)
+  appointments      appointments[]
+  invoices          invoices[]
+  lab_orders        lab_orders[]
+  medical_records   medical_records[]
+  user              users?            @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  owner             users?            @relation("patientOwner", fields: [owner_user_id], references: [id], onUpdate: NoAction)
+  prescriptions     prescriptions[]
+  reviews           doctor_reviews[]
+}
+
+model rooms {
+  id          Int         @id @default(autoincrement())
+  name        String      @db.VarChar(150)
+  type        String?     @db.VarChar(100)
+  description String?
+  capacity    Int?        @default(1)
+  doctor_id   Int?
+  created_at  DateTime    @default(now()) @db.Timestamptz(6)
+  updated_at  DateTime    @default(now()) @db.Timestamptz(6)
+  deleted_at  DateTime?   @db.Timestamptz(6)
+  schedules   schedules[]
+}
+
+model schedules {
+  id             Int      @id @default(autoincrement())
+  doctor_id      Int
+  room_id        Int?
+  date           DateTime @db.Date
+  start_time     DateTime @db.Time(6)
+  end_time       DateTime @db.Time(6)
+  recurrent_rule String?  @db.VarChar(255)
+  created_at     DateTime @default(now()) @db.Timestamptz(6)
+  doctor         doctors  @relation(fields: [doctor_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  room           rooms?   @relation(fields: [room_id], references: [id], onUpdate: NoAction)
+}
+
+model timeslots {
+  id           Int            @id @default(autoincrement())
+  doctor_id    Int
+  date         DateTime       @db.Date
+  start_time   DateTime       @db.Time(6)
+  end_time     DateTime       @db.Time(6)
+  max_patients Int?           @default(1)
+  booked_count Int?           @default(0)
+  is_active    Boolean?       @default(true)
+  created_at   DateTime       @default(now()) @db.Timestamptz(6)
+  updated_at   DateTime       @default(now()) @db.Timestamptz(6)
+  appointments appointments[]
+  doctor       doctors        @relation(fields: [doctor_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@unique([doctor_id, date, start_time, end_time], name: "timeslot_unique", map: "timeslot_unique")
+  @@index([doctor_id, date], map: "idx_timeslots_doctor_date")
+}
+
+model appointments {
+  id               Int                @id @default(autoincrement())
+  patient_id       Int
+  doctor_id        Int
+  timeslot_id      Int?
+  appointment_date DateTime           @db.Date
+  appointment_time DateTime?          @db.Time(6)
+  patient_confirmed Boolean?          @default(false)
+  patient_confirmed_at DateTime?     @db.Timestamptz(6)
+  confirmation_token String?         @db.VarChar(255)
+  confirmation_sent_at DateTime?     @db.Timestamptz(6)
+  checked_in_at     DateTime?       @db.Timestamptz(6)
+  status           appointment_status @default(PENDING)
+  reason           String?
+  source           String?            @default("web") @db.VarChar(50)
+  created_by       Int?
+  created_at       DateTime           @default(now()) @db.Timestamptz(6)
+  updated_at       DateTime           @default(now()) @db.Timestamptz(6)
+  creator          users?             @relation("user_appointments", fields: [created_by], references: [id], onUpdate: NoAction)
+  doctor           doctors            @relation(fields: [doctor_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  patient          patients           @relation(fields: [patient_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  timeslot         timeslots?         @relation(fields: [timeslot_id], references: [id], onUpdate: NoAction)
+  invoices         invoices[]
+  lab_orders       lab_orders[]
+  medical_records  medical_records[]
+  prescriptions    prescriptions[]
+
+  @@unique([patient_id, timeslot_id], name: "uq_appointments_patient_timeslot", map: "uq_appointments_patient_timeslot")
+  @@index([doctor_id, appointment_date], map: "idx_appointments_doctor_date")
+  @@index([status], map: "idx_appointments_status")
+}
+
+model medical_records {
+  id             Int           @id @default(autoincrement())
+  appointment_id Int?
+  patient_id     Int
+  doctor_id      Int
+  diagnosis      String?
+  notes          String?
+  exam_results   String?
+  lab_tests      String?
+  attachments    Json?
+  created_at     DateTime      @default(now()) @db.Timestamptz(6)
+  updated_at     DateTime      @default(now()) @db.Timestamptz(6)
+  appointment    appointments? @relation(fields: [appointment_id], references: [id], onUpdate: NoAction)
+  doctor         doctors       @relation(fields: [doctor_id], references: [id], onDelete: SetNull, onUpdate: NoAction)
+  patient        patients      @relation(fields: [patient_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  prescriptions  prescriptions[]
+  lab_orders     lab_orders[]
+
+  @@index([patient_id], map: "idx_medicalrecords_patient")
+}
+
+model medicines {
+  id          Int      @id @default(autoincrement())
+  name        String   @db.VarChar(255)
+  code        String?  @unique @db.VarChar(100)
+  description String?
+  unit        String?  @db.VarChar(50)
+  price       Int?     @default(0)
+  created_at  DateTime @default(now()) @db.Timestamptz(6)
+  updated_at  DateTime @default(now()) @db.Timestamptz(6)
+  deleted_at  DateTime? @db.Timestamptz(6)
+  stocks      stocks[]
+}
+
+model stocks {
+  id           Int       @id @default(autoincrement())
+  medicine_id  Int
+  batch_number String?   @db.VarChar(100)
+  expiry_date  DateTime? @db.Date
+  quantity     Int       @default(0)
+  created_at   DateTime  @default(now()) @db.Timestamptz(6)
+  updated_at   DateTime  @default(now()) @db.Timestamptz(6)
+  deleted_at   DateTime? @db.Timestamptz(6)
+  medicine     medicines @relation(fields: [medicine_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  @@unique([medicine_id, batch_number])
+}
+
+model prescriptions {
+  id             Int                 @id @default(autoincrement())
+  appointment_id Int?
+  medical_record_id Int?
+  doctor_id      Int
+  patient_id     Int
+  items          Json
+  total_amount   Int?                @default(0)
+  notified_at    DateTime?           @db.Timestamptz(6)
+  notified_by    Int?
+  status         prescription_status @default(DRAFT)
+  created_at     DateTime            @default(now()) @db.Timestamptz(6)
+  updated_at     DateTime            @default(now()) @db.Timestamptz(6)
+  appointment    appointments?       @relation(fields: [appointment_id], references: [id], onUpdate: NoAction)
+  doctor         doctors             @relation(fields: [doctor_id], references: [id], onDelete: SetNull, onUpdate: NoAction)
+  patient        patients            @relation(fields: [patient_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  medical_record medical_records?   @relation(fields: [medical_record_id], references: [id], onDelete: SetNull, onUpdate: NoAction)
+  notified_by_user users?            @relation(fields: [notified_by], references: [id], onUpdate: NoAction)
+  invoices       invoices[]
+
+  @@index([patient_id], map: "idx_prescriptions_patient")
+}
+
+model suppliers {
+  id           Int      @id @default(autoincrement())
+  name         String   @db.VarChar(255)
+  contact_info Json?
+  created_at   DateTime @default(now()) @db.Timestamptz(6)
+}
+
+model invoices {
+  id             Int            @id @default(autoincrement())
+  appointment_id Int?
+  patient_id     Int
+  prescription_id Int?
+  items          Json
+  subtotal       Int?           @default(0)
+  tax            Int?           @default(0)
+  discount       Int?           @default(0)
+  total          Int?           @default(0)
+  status         invoice_status @default(UNPAID)
+  paid_at        DateTime?      @db.Timestamptz(6)
+  created_at     DateTime       @default(now()) @db.Timestamptz(6)
+  updated_at     DateTime       @default(now()) @db.Timestamptz(6)
+  appointment    appointments?  @relation(fields: [appointment_id], references: [id], onUpdate: NoAction)
+  patient        patients       @relation(fields: [patient_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  prescription   prescriptions? @relation(fields: [prescription_id], references: [id], onUpdate: NoAction)
+
+  @@index([patient_id], map: "idx_invoices_patient")
+}
+
+model lab_orders {
+  id             Int           @id @default(autoincrement())
+  appointment_id Int?
+  medical_record_id Int?
+  patient_id     Int
+  doctor_id      Int
+  tests          Json
+  status         String?       @default("PENDING") @db.VarChar(50)
+  results        Json?
+  created_at     DateTime      @default(now()) @db.Timestamptz(6)
+  updated_at     DateTime      @default(now()) @db.Timestamptz(6)
+  appointment    appointments? @relation(fields: [appointment_id], references: [id], onUpdate: NoAction)
+  doctor         doctors       @relation(fields: [doctor_id], references: [id], onDelete: SetNull, onUpdate: NoAction)
+  patient        patients      @relation(fields: [patient_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  medical_record medical_records?   @relation(fields: [medical_record_id], references: [id], onDelete: SetNull, onUpdate: NoAction)
+}
+
+model notifications {
+  id         Int      @id @default(autoincrement())
+  user_id    Int?
+  type       String?  @db.VarChar(100)
+  payload    Json?
+  is_read    Boolean? @default(false)
+  created_at DateTime @default(now()) @db.Timestamptz(6)
+  user       users?   @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+}
+
+model audit_logs {
+  id         Int      @id @default(autoincrement())
+  user_id    Int?
+  action     String   @db.VarChar(255)
+  meta       Json?
+  created_at DateTime @default(now()) @db.Timestamptz(6)
+}
+
+enum appointment_status {
+  PENDING
+  CONFIRMED
+  CHECKED_IN
+  IN_PROGRESS
+  COMPLETED
+  CANCELLED
+  NO_SHOW
+}
+
+enum invoice_status {
+  UNPAID
+  PAID
+  REFUNDED
+}
+
+enum prescription_status {
+  DRAFT
+  APPROVED
+  INVOICED
+  READY_FOR_DISPENSE
+  DISPENSED
+}
+
+model doctor_reviews {
+  id             Int       @id @default(autoincrement())
+  doctor_id      Int
+  patient_id     Int
+  rating         Int       @db.SmallInt // 1-5 stars
+  comment        String?   @db.Text
+  created_at     DateTime  @default(now()) @db.Timestamptz(6)
+  exam_results   Json?
+  updated_at     DateTime  @default(now()) @db.Timestamptz(6)
+  
+  doctor         doctors   @relation(fields: [doctor_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  patient        patients  @relation(fields: [patient_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  
+  @@unique([doctor_id, patient_id], name: "uq_doctor_patient_review")
+  @@index([doctor_id], map: "idx_reviews_doctor")
+  @@index([patient_id], map: "idx_reviews_patient")
+}

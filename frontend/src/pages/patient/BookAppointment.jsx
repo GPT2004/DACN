@@ -1,0 +1,2 @@
+import React, {useState} from 'react';
+export default function BookAppointment(){ const [name,setName]=useState(''); return (<div className="p-6"><h1 className="text-xl font-semibold mb-4">Đặt lịch khám</h1><div className="bg-white rounded shadow p-4"><label className="block mb-2">Tên bệnh nhân<input value={name} onChange={e=>setName(e.target.value)} className="mt-1 p-2 border rounded w-full"/></label><button className="mt-2 px-4 py-2 bg-blue-600 text-white rounded">Đặt lịch</button></div></div>); }

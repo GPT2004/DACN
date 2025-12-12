@@ -1,0 +1,54 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:15-alpine
+    container_name: clinic_postgres
+    environment:
+      POSTGRES_DB: clinic_db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./test.sql:/docker-entrypoint-initdb.d/init.sql
+    ports:
+      - "5432:5432"
+    networks:
+      - clinic_network
+
+  backend:
+    build: .
+    container_name: clinic_backend
+    ports:
+      - "3000:3000"
+    environment:
+      DATABASE_URL: postgresql://postgres:postgres@postgres:5432/clinic_db
+      AI_SERVICE_URL: http://ai-service:5000
+      NODE_ENV: production
+    depends_on:
+      - postgres
+      - ai-service
+    volumes:
+      - ./logs:/app/logs
+      - ./uploads:/app/uploads
+    networks:
+      - clinic_network
+    restart: unless-stopped
+
+  ai-service:
+    build: ./ai_service
+    container_name: clinic_ai
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./ai_service/models:/app/models
+    networks:
+      - clinic_network
+    restart: unless-stopped
+
+volumes:
+  postgres_data:
+
+networks:
+  clinic_network:
+    driver: bridge

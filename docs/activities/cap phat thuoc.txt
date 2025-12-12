@@ -1,0 +1,131 @@
+<svg viewBox="0 0 800 1200" xmlns="http://www.w3.org/2000/svg">
+  <!-- Title -->
+  <text x="400" y="30" font-family="Arial" font-size="18" font-weight="bold" text-anchor="middle" fill="#333">
+    Biểu đồ hoạt động Cấp phát thuốc
+  </text>
+  
+  <!-- Swimlanes -->
+  <rect x="50" y="60" width="700" height="1080" fill="none" stroke="#333" stroke-width="2"/>
+  <line x1="400" y1="60" x2="400" y2="1140" stroke="#333" stroke-width="2"/>
+  
+  <!-- Swimlane Headers -->
+  <rect x="50" y="60" width="350" height="40" fill="#f0f0f0" stroke="#333" stroke-width="1"/>
+  <rect x="400" y="60" width="350" height="40" fill="#f0f0f0" stroke="#333" stroke-width="1"/>
+  
+  <text x="225" y="85" font-family="Arial" font-size="14" font-weight="bold" text-anchor="middle">Dược sĩ</text>
+  <text x="575" y="85" font-family="Arial" font-size="14" font-weight="bold" text-anchor="middle">Hệ thống</text>
+  
+  <!-- Start node -->
+  <circle cx="225" cy="130" r="12" fill="#000"/>
+  <line x1="225" y1="142" x2="225" y2="170" stroke="#E91E63" stroke-width="2" marker-end="url(#arrowhead)"/>
+  
+  <!-- Xem dashboard đơn thuốc -->
+  <rect x="115" y="170" width="220" height="40" rx="20" fill="#FFF9C4" stroke="#F9A825" stroke-width="2"/>
+  <text x="225" y="195" font-family="Arial" font-size="12" text-anchor="middle">Xem dashboard đơn thuốc chờ</text>
+  <line x1="225" y1="210" x2="225" y2="240" stroke="#E91E63" stroke-width="2" marker-end="url(#arrowhead)"/>
+  
+  <!-- Arrow to system -->
+  <line x1="225" y1="240" x2="470" y2="240" stroke="#E91E63" stroke-width="2" marker-end="url(#arrowhead)"/>
+  
+  <!-- Truy vấn đơn thuốc đã duyệt -->
+  <rect x="440" y="220" width="240" height="40" rx="20" fill="#FFF9C4" stroke="#F9A825" stroke-width="2"/>
+  <text x="560" y="245" font-family="Arial" font-size="12" text-anchor="middle">Truy vấn đơn thuốc "Đã duyệt"</text>
+  
+  <!-- Arrow back -->
+  <line x1="440" y1="240" x2="225" y2="240" stroke="#E91E63" stroke-width="2"/>
+  <line x1="225" y1="240" x2="225" y2="300" stroke="#E91E63" stroke-width="2" marker-end="url(#arrowhead)"/>
+  
+  <!-- Chọn đơn thuốc -->
+  <rect x="140" y="300" width="170" height="40" rx="20" fill="#FFF9C4" stroke="#F9A825" stroke-width="2"/>
+  <text x="225" y="325" font-family="Arial" font-size="12" text-anchor="middle">Chọn đơn thuốc cần cấp</text>
+  <line x1="225" y1="340" x2="225" y2="370" stroke="#E91E63" stroke-width="2" marker-end="url(#arrowhead)"/>
+  
+  <!-- Arrow to system -->
+  <line x1="225" y1="370" x2="470" y2="370" stroke="#E91E63" stroke-width="2" marker-end="url(#arrowhead)"/>
+  
+  <!-- Tải chi tiết đơn -->
+  <rect x="455" y="350" width="210" height="40" rx="20" fill="#FFF9C4" stroke="#F9A825" stroke-width="2"/>
+  <text x="560" y="375" font-family="Arial" font-size="12" text-anchor="middle">Tải chi tiết đơn & kiểm tra kho</text>
+  
+  <!-- Arrow back -->
+  <line x1="455" y1="370" x2="225" y2="370" stroke="#E91E63" stroke-width="2"/>
+  <line x1="225" y1="370" x2="225" y2="430" stroke="#E91E63" stroke-width="2" marker-end="url(#arrowhead)"/>
+  
+  <!-- Kiểm tra tồn kho từng thuốc -->
+  <rect x="110" y="430" width="230" height="40" rx="20" fill="#FFF9C4" stroke="#F9A825" stroke-width="2"/>
+  <text x="225" y="455" font-family="Arial" font-size="12" text-anchor="middle">Kiểm tra tồn kho từng loại thuốc</text>
+  <line x1="225" y1="470" x2="225" y2="520" stroke="#E91E63" stroke-width="2" marker-end="url(#arrowhead)"/>
+  
+  <!-- Decision - Đủ thuốc? -->
+  <path d="M 225 520 L 275 570 L 225 620 L 175 570 Z" fill="#FFE082" stroke="#F57C00" stroke-width="2"/>
+  <text x="225" y="565" font-family="Arial" font-size="10" text-anchor="middle">Đủ thuốc</text>
+  <text x="225" y="580" font-family="Arial" font-size="10" text-anchor="middle">trong kho?</text>
+  
+  <!-- No path - Thiếu thuốc -->
+  <text x="315" y="575" font-family="Arial" font-size="11" fill="#666">Không</text>
+  <line x1="275" y1="570" x2="380" y2="570" stroke="#E91E63" stroke-width="2"/>
+  <line x1="380" y1="570" x2="380" y2="540" stroke="#E91E63" stroke-width="2"/>
+  <line x1="380" y1="540" x2="470" y2="540" stroke="#E91E63" stroke-width="2" marker-end="url(#arrowhead)"/>
+  
+  <!-- Thông báo thiếu thuốc -->
+  <rect x="470" y="520" width="170" height="60" rx="20" fill="#FFF9C4" stroke="#F9A825" stroke-width="2"/>
+  <text x="555" y="540" font-family="Arial" font-size="11" text-anchor="middle">Thông báo thiếu thuốc</text>
+  <text x="555" y="555" font-family="Arial" font-size="10" text-anchor="middle">Đề xuất: liên hệ bác sĩ</text>
+  <text x="555" y="570" font-family="Arial" font-size="10" text-anchor="middle">hoặc nhập thêm</text>
+  
+  <!-- End for insufficient stock -->
+  <line x1="640" y1="550" x2="680" y2="550" stroke="#E91E63" stroke-width="2"/>
+  <circle cx="700" cy="550" r="12" fill="#000"/>
+  <circle cx="700" cy="550" r="8" fill="#fff"/>
+  <line x1="680" y1="550" x2="688" y2="550" stroke="#E91E63" stroke-width="2" marker-end="url(#arrowhead)"/>
+  
+  <!-- Yes path - Đủ thuốc -->
+  <text x="225" y="650" font-family="Arial" font-size="11" text-anchor="middle" fill="#666">Có</text>
+  <line x1="225" y1="620" x2="225" y2="680" stroke="#E91E63" stroke-width="2" marker-end="url(#arrowhead)"/>
+  
+  <!-- Chuẩn bị thuốc -->
+  <rect x="135" y="680" width="180" height="40" rx="20" fill="#FFF9C4" stroke="#F9A825" stroke-width="2"/>
+  <text x="225" y="705" font-family="Arial" font-size="12" text-anchor="middle">Chuẩn bị thuốc theo đơn</text>
+  <line x1="225" y1="720" x2="225" y2="760" stroke="#E91E63" stroke-width="2" marker-end="url(#arrowhead)"/>
+  
+  <!-- Hướng dẫn bệnh nhân -->
+  <rect x="115" y="760" width="220" height="60" rx="20" fill="#FFF9C4" stroke="#F9A825" stroke-width="2"/>
+  <text x="225" y="780" font-family="Arial" font-size="11" text-anchor="middle">Hướng dẫn bệnh nhân:</text>
+  <text x="225" y="795" font-family="Arial" font-size="10" text-anchor="middle">- Cách dùng thuốc</text>
+  <text x="225" y="810" font-family="Arial" font-size="10" text-anchor="middle">- Tác dụng phụ, lưu ý</text>
+  <line x1="225" y1="820" x2="225" y2="860" stroke="#E91E63" stroke-width="2" marker-end="url(#arrowhead)"/>
+  
+  <!-- Xác nhận cấp phát -->
+  <rect x="145" y="860" width="160" height="40" rx="20" fill="#FFF9C4" stroke="#F9A825" stroke-width="2"/>
+  <text x="225" y="885" font-family="Arial" font-size="12" text-anchor="middle">Xác nhận cấp phát</text>
+  <line x1="225" y1="900" x2="225" y2="930" stroke="#E91E63" stroke-width="2" marker-end="url(#arrowhead)"/>
+  
+  <!-- Arrow to system -->
+  <line x1="225" y1="930" x2="470" y2="930" stroke="#E91E63" stroke-width="2" marker-end="url(#arrowhead)"/>
+  
+  <!-- Trừ tồn kho -->
+  <rect x="455" y="910" width="210" height="40" rx="20" fill="#FFF9C4" stroke="#F9A825" stroke-width="2"/>
+  <text x="560" y="935" font-family="Arial" font-size="12" text-anchor="middle">Trừ tồn kho realtime</text>
+  <line x1="560" y1="950" x2="560" y2="990" stroke="#E91E63" stroke-width="2" marker-end="url(#arrowhead)"/>
+  
+  <!-- Cập nhật trạng thái đơn -->
+  <rect x="440" y="990" width="240" height="40" rx="20" fill="#FFF9C4" stroke="#F9A825" stroke-width="2"/>
+  <text x="560" y="1015" font-family="Arial" font-size="12" text-anchor="middle">Cập nhật trạng thái "Đã cấp phát"</text>
+  <line x1="560" y1="1030" x2="560" y2="1070" stroke="#E91E63" stroke-width="2" marker-end="url(#arrowhead)"/>
+  
+  <!-- In phiếu cấp thuốc -->
+  <rect x="465" y="1070" width="190" height="40" rx="20" fill="#FFF9C4" stroke="#F9A825" stroke-width="2"/>
+  <text x="560" y="1095" font-family="Arial" font-size="12" text-anchor="middle">In phiếu cấp thuốc (nếu cần)</text>
+  
+  <!-- End node -->
+  <circle cx="560" cy="1130" r="12" fill="#000"/>
+  <circle cx="560" cy="1130" r="8" fill="#fff"/>
+  <line x1="560" y1="1110" x2="560" y2="1118" stroke="#E91E63" stroke-width="2" marker-end="url(#arrowhead)"/>
+  
+  <!-- Arrow markers -->
+  <defs>
+    <marker id="arrowhead" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+      <polygon points="0 0, 10 3, 0 6" fill="#E91E63" />
+    </marker>
+  </defs>
+</svg>

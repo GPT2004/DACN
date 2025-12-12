@@ -1,0 +1,161 @@
+<svg viewBox="0 0 800 1350" xmlns="http://www.w3.org/2000/svg">
+  <!-- Title -->
+  <text x="400" y="30" font-family="Arial" font-size="18" font-weight="bold" text-anchor="middle" fill="#333">
+    Biểu đồ hoạt động Tạo/Cập nhật hồ sơ bệnh án
+  </text>
+  
+  <!-- Swimlanes -->
+  <rect x="50" y="60" width="700" height="1260" fill="none" stroke="#333" stroke-width="2"/>
+  <line x1="400" y1="60" x2="400" y2="1320" stroke="#333" stroke-width="2"/>
+  
+  <!-- Swimlane Headers -->
+  <rect x="50" y="60" width="350" height="40" fill="#f0f0f0" stroke="#333" stroke-width="1"/>
+  <rect x="400" y="60" width="350" height="40" fill="#f0f0f0" stroke="#333" stroke-width="1"/>
+  
+  <text x="225" y="85" font-family="Arial" font-size="14" font-weight="bold" text-anchor="middle">Bác sĩ</text>
+  <text x="575" y="85" font-family="Arial" font-size="14" font-weight="bold" text-anchor="middle">Hệ thống</text>
+  
+  <!-- Start node -->
+  <circle cx="225" cy="130" r="12" fill="#000"/>
+  <line x1="225" y1="142" x2="225" y2="170" stroke="#E91E63" stroke-width="2" marker-end="url(#arrowhead)"/>
+  
+  <!-- Truy cập quản lý hồ sơ BA -->
+  <rect x="130" y="170" width="190" height="40" rx="20" fill="#FFF9C4" stroke="#F9A825" stroke-width="2"/>
+  <text x="225" y="195" font-family="Arial" font-size="12" text-anchor="middle">Truy cập quản lý hồ sơ BA</text>
+  <line x1="225" y1="210" x2="225" y2="240" stroke="#E91E63" stroke-width="2"/>
+  
+  <!-- Arrow to system -->
+  <line x1="225" y1="240" x2="470" y2="240" stroke="#E91E63" stroke-width="2" marker-end="url(#arrowhead)"/>
+  
+  <!-- Hiển thị danh sách hồ sơ BA -->
+  <rect x="455" y="220" width="210" height="40" rx="20" fill="#FFF9C4" stroke="#F9A825" stroke-width="2"/>
+  <text x="560" y="245" font-family="Arial" font-size="12" text-anchor="middle">Hiển thị danh sách hồ sơ BA</text>
+  
+  <!-- Arrow back -->
+  <line x1="455" y1="240" x2="225" y2="240" stroke="#E91E63" stroke-width="2"/>
+  <line x1="225" y1="240" x2="225" y2="300" stroke="#E91E63" stroke-width="2" marker-end="url(#arrowhead)"/>
+  
+  <!-- Decision - Tạo mới hay sửa/xóa? -->
+  <path d="M 225 300 L 275 350 L 225 400 L 175 350 Z" fill="#FFE082" stroke="#F57C00" stroke-width="2"/>
+  <text x="225" y="345" font-family="Arial" font-size="10" text-anchor="middle">Tạo mới hay</text>
+  <text x="225" y="360" font-family="Arial" font-size="10" text-anchor="middle">sửa/xóa?</text>
+  
+  <!-- Sửa/xóa path -->
+  <text x="310" y="355" font-family="Arial" font-size="11" fill="#666">Sửa/xóa</text>
+  <line x1="275" y1="350" x2="470" y2="350" stroke="#E91E63" stroke-width="2" marker-end="url(#arrowhead)"/>
+  
+  <!-- Hiển thị form nhập -->
+  <rect x="470" y="330" width="170" height="40" rx="20" fill="#FFF9C4" stroke="#F9A825" stroke-width="2"/>
+  <text x="555" y="355" font-family="Arial" font-size="12" text-anchor="middle">Hiển thị form nhập</text>
+  
+  <line x1="640" y1="350" x2="680" y2="350" stroke="#E91E63" stroke-width="2"/>
+  <line x1="680" y1="350" x2="680" y2="490" stroke="#E91E63" stroke-width="2"/>
+  <line x1="680" y1="490" x2="225" y2="490" stroke="#E91E63" stroke-width="2" marker-end="url(#arrowhead)"/>
+  
+  <!-- Tạo mới path -->
+  <text x="225" y="430" font-family="Arial" font-size="11" text-anchor="middle" fill="#666">Tạo mới</text>
+  <line x1="225" y1="400" x2="225" y2="440" stroke="#E91E63" stroke-width="2" marker-end="url(#arrowhead)"/>
+  
+  <!-- Chọn hồ sơ vận viên -->
+  <rect x="145" y="440" width="160" height="40" rx="20" fill="#FFF9C4" stroke="#F9A825" stroke-width="2"/>
+  <text x="225" y="465" font-family="Arial" font-size="12" text-anchor="middle">Chọn hồ sơ vận viên</text>
+  
+  <line x1="225" y1="480" x2="225" y2="510" stroke="#E91E63" stroke-width="2"/>
+  
+  <!-- Arrow to system -->
+  <line x1="225" y1="510" x2="470" y2="510" stroke="#E91E63" stroke-width="2" marker-end="url(#arrowhead)"/>
+  
+  <!-- Tải chi tiết hồ sơ BA -->
+  <rect x="470" y="490" width="170" height="40" rx="20" fill="#FFF9C4" stroke="#F9A825" stroke-width="2"/>
+  <text x="555" y="515" font-family="Arial" font-size="12" text-anchor="middle">Tải chi tiết hồ sơ BA</text>
+  
+  <!-- Arrow back -->
+  <line x1="470" y1="510" x2="225" y2="510" stroke="#E91E63" stroke-width="2"/>
+  <line x1="225" y1="510" x2="225" y2="570" stroke="#E91E63" stroke-width="2" marker-end="url(#arrowhead)"/>
+  
+  <!-- Nhập/Chỉnh sửa thông tin -->
+  <rect x="80" y="570" width="290" height="90" rx="20" fill="#FFF9C4" stroke="#F9A825" stroke-width="2"/>
+  <text x="225" y="590" font-family="Arial" font-size="11" text-anchor="middle">Nhập/Chỉnh sửa thông tin:</text>
+  <text x="225" y="607" font-family="Arial" font-size="10" text-anchor="middle">- Chẩn đoán</text>
+  <text x="225" y="622" font-family="Arial" font-size="10" text-anchor="middle">- Điều trị và Thuốc/Vật liệu</text>
+  <text x="225" y="637" font-family="Arial" font-size="10" text-anchor="middle">- Thương tích/Diễn biến</text>
+  <text x="225" y="652" font-family="Arial" font-size="10" text-anchor="middle">- Hướng dẫn điều trị</text>
+  
+  <line x1="225" y1="660" x2="225" y2="710" stroke="#E91E63" stroke-width="2" marker-end="url(#arrowhead)"/>
+  
+  <!-- Decision - Đính kèm file? -->
+  <path d="M 225 710 L 275 760 L 225 810 L 175 760 Z" fill="#FFE082" stroke="#F57C00" stroke-width="2"/>
+  <text x="225" y="755" font-family="Arial" font-size="10" text-anchor="middle">Đính kèm</text>
+  <text x="225" y="770" font-family="Arial" font-size="10" text-anchor="middle">file?</text>
+  
+  <!-- Yes path - Upload file -->
+  <text x="310" y="765" font-family="Arial" font-size="11" fill="#666">Có</text>
+  <line x1="275" y1="760" x2="470" y2="760" stroke="#E91E63" stroke-width="2" marker-end="url(#arrowhead)"/>
+  
+  <!-- Upload file -->
+  <rect x="470" y="730" width="170" height="60" rx="20" fill="#FFF9C4" stroke="#F9A825" stroke-width="2"/>
+  <text x="555" y="750" font-family="Arial" font-size="11" text-anchor="middle">Upload file:</text>
+  <text x="555" y="765" font-family="Arial" font-size="10" text-anchor="middle">Xoa, Kungkita, Môi xôt</text>
+  <text x="555" y="780" font-family="Arial" font-size="10" text-anchor="middle">vật nuối, vv</text>
+  
+  <line x1="640" y1="760" x2="680" y2="760" stroke="#E91E63" stroke-width="2"/>
+  <line x1="680" y1="760" x2="680" y2="880" stroke="#E91E63" stroke-width="2"/>
+  <line x1="680" y1="880" x2="225" y2="880" stroke="#E91E63" stroke-width="2" marker-end="url(#arrowhead)"/>
+  
+  <!-- No path -->
+  <text x="225" y="840" font-family="Arial" font-size="11" text-anchor="middle" fill="#666">Không</text>
+  <line x1="225" y1="810" x2="225" y2="880" stroke="#E91E63" stroke-width="2" marker-end="url(#arrowhead)"/>
+  
+  <!-- Nhấn Lưu -->
+  <rect x="165" y="880" width="120" height="40" rx="20" fill="#FFF9C4" stroke="#F9A825" stroke-width="2"/>
+  <text x="225" y="905" font-family="Arial" font-size="12" text-anchor="middle">Nhấn Lưu</text>
+  <line x1="225" y1="920" x2="225" y2="950" stroke="#E91E63" stroke-width="2"/>
+  
+  <!-- Arrow to system -->
+  <line x1="225" y1="950" x2="470" y2="950" stroke="#E91E63" stroke-width="2" marker-end="url(#arrowhead)"/>
+  
+  <!-- Validate dữ liệu -->
+  <rect x="470" y="930" width="170" height="40" rx="20" fill="#FFF9C4" stroke="#F9A825" stroke-width="2"/>
+  <text x="555" y="955" font-family="Arial" font-size="12" text-anchor="middle">Validate dữ liệu</text>
+  
+  <line x1="555" y1="970" x2="555" y2="1020" stroke="#E91E63" stroke-width="2" marker-end="url(#arrowhead)"/>
+  
+  <!-- Decision - Hợp lệ? -->
+  <path d="M 555 1020 L 605 1070 L 555 1120 L 505 1070 Z" fill="#FFE082" stroke="#F57C00" stroke-width="2"/>
+  <text x="555" y="1065" font-family="Arial" font-size="10" text-anchor="middle">Dữ liệu</text>
+  <text x="555" y="1080" font-family="Arial" font-size="10" text-anchor="middle">hợp lệ?</text>
+  
+  <!-- No path -->
+  <text x="470" y="1075" font-family="Arial" font-size="11" fill="#666">Không</text>
+  <line x1="505" y1="1070" x2="430" y2="1070" stroke="#E91E63" stroke-width="2" marker-end="url(#arrowhead)"/>
+  
+  <!-- Hiển thị lỗi -->
+  <rect x="340" y="1050" width="90" height="40" rx="20" fill="#FFF9C4" stroke="#F9A825" stroke-width="2"/>
+  <text x="385" y="1065" font-family="Arial" font-size="9" text-anchor="middle">Hiển thị</text>
+  <text x="385" y="1080" font-family="Arial" font-size="9" text-anchor="middle">thông báo lỗi</text>
+  
+  <!-- Loop back -->
+  <line x1="340" y1="1070" x2="90" y2="1070" stroke="#E91E63" stroke-width="2"/>
+  <line x1="90" y1="1070" x2="90" y2="900" stroke="#E91E63" stroke-width="2"/>
+  <line x1="90" y1="900" x2="165" y2="900" stroke="#E91E63" stroke-width="2" marker-end="url(#arrowhead)"/>
+  
+  <!-- Yes path -->
+  <text x="555" y="1150" font-family="Arial" font-size="11" text-anchor="middle" fill="#666">Có</text>
+  <line x1="555" y1="1120" x2="555" y2="1190" stroke="#E91E63" stroke-width="2" marker-end="url(#arrowhead)"/>
+  
+  <!-- Lưu vào CSDL -->
+  <rect x="470" y="1190" width="170" height="40" rx="20" fill="#FFF9C4" stroke="#F9A825" stroke-width="2"/>
+  <text x="555" y="1215" font-family="Arial" font-size="12" text-anchor="middle">Lưu vào CSDL</text>
+  
+  <!-- End node -->
+  <line x1="555" y1="1230" x2="555" y2="1260" stroke="#E91E63" stroke-width="2" marker-end="url(#arrowhead)"/>
+  <circle cx="555" cy="1280" r="12" fill="#000"/>
+  <circle cx="555" cy="1280" r="8" fill="#fff"/>
+  
+  <!-- Arrow markers -->
+  <defs>
+    <marker id="arrowhead" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+      <polygon points="0 0, 10 3, 0 6" fill="#E91E63" />
+    </marker>
+  </defs>
+</svg>

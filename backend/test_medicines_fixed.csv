@@ -1,0 +1,6 @@
+name,code,quantity,expiry_date,batch_number,unit,price,description
+Paracetamol,PARA001,100,31/12/2026,LOT2026001,viên,500,Thuốc giảm đau
+Vitamin C,VITC001,50,15/06/2026,LOT2026002,hộp,25000,Vitamin bổ sung
+Amoxicillin,AMOX001,75,30/11/2026,LOT2026003,viên,800,Kháng sinh Amoxicillin
+Ibuprofen,IBUP001,80,20/08/2026,LOT2026004,viên,600,Thuốc chống viêm
+Aspirin,ASPI001,120,10/03/2027,LOT2026005,viên,300,Thuốc chống đông máu

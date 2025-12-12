@@ -1,0 +1,134 @@
+<svg viewBox="0 0 800 1300" xmlns="http://www.w3.org/2000/svg">
+  <!-- Title -->
+  <text x="400" y="30" font-family="Arial" font-size="18" font-weight="bold" text-anchor="middle" fill="#333">
+    Biểu đồ hoạt động Thanh toán và lập hóa đơn
+  </text>
+  
+  <!-- Swimlanes -->
+  <rect x="50" y="60" width="700" height="1180" fill="none" stroke="#333" stroke-width="2"/>
+  <line x1="400" y1="60" x2="400" y2="1240" stroke="#333" stroke-width="2"/>
+  
+  <!-- Swimlane Headers -->
+  <rect x="50" y="60" width="350" height="40" fill="#f0f0f0" stroke="#333" stroke-width="1"/>
+  <rect x="400" y="60" width="350" height="40" fill="#f0f0f0" stroke="#333" stroke-width="1"/>
+  
+  <text x="225" y="85" font-family="Arial" font-size="14" font-weight="bold" text-anchor="middle">Lễ tân</text>
+  <text x="575" y="85" font-family="Arial" font-size="14" font-weight="bold" text-anchor="middle">Hệ thống</text>
+  
+  <!-- Start node -->
+  <circle cx="225" cy="130" r="12" fill="#000"/>
+  <line x1="225" y1="142" x2="225" y2="170" stroke="#E91E63" stroke-width="2" marker-end="url(#arrowhead)"/>
+  
+  <!-- Bệnh nhân đến quầy -->
+  <rect x="130" y="170" width="190" height="40" rx="20" fill="#FFF9C4" stroke="#F9A825" stroke-width="2"/>
+  <text x="225" y="195" font-family="Arial" font-size="12" text-anchor="middle">Bệnh nhân đến quầy thanh toán</text>
+  <line x1="225" y1="210" x2="225" y2="250" stroke="#E91E63" stroke-width="2" marker-end="url(#arrowhead)"/>
+  
+  <!-- Tìm kiếm hồ sơ -->
+  <rect x="110" y="250" width="230" height="40" rx="20" fill="#FFF9C4" stroke="#F9A825" stroke-width="2"/>
+  <text x="225" y="275" font-family="Arial" font-size="12" text-anchor="middle">Tìm hồ sơ (theo mã lịch/tên/SĐT)</text>
+  <line x1="225" y1="290" x2="225" y2="320" stroke="#E91E63" stroke-width="2" marker-end="url(#arrowhead)"/>
+  
+  <!-- Arrow to system -->
+  <line x1="225" y1="320" x2="470" y2="320" stroke="#E91E63" stroke-width="2" marker-end="url(#arrowhead)"/>
+  
+  <!-- Truy vấn thông tin -->
+  <rect x="440" y="300" width="240" height="40" rx="20" fill="#FFF9C4" stroke="#F9A825" stroke-width="2"/>
+  <text x="560" y="325" font-family="Arial" font-size="12" text-anchor="middle">Truy vấn lịch khám & dịch vụ đã dùng</text>
+  
+  <!-- Arrow back -->
+  <line x1="440" y1="320" x2="225" y2="320" stroke="#E91E63" stroke-width="2"/>
+  <line x1="225" y1="320" x2="225" y2="380" stroke="#E91E63" stroke-width="2" marker-end="url(#arrowhead)"/>
+  
+  <!-- Decision - Tìm thấy? -->
+  <path d="M 225 380 L 275 430 L 225 480 L 175 430 Z" fill="#FFE082" stroke="#F57C00" stroke-width="2"/>
+  <text x="225" y="425" font-family="Arial" font-size="10" text-anchor="middle">Tìm thấy</text>
+  <text x="225" y="440" font-family="Arial" font-size="10" text-anchor="middle">hồ sơ?</text>
+  
+  <!-- No path - Loop back -->
+  <text x="120" y="435" font-family="Arial" font-size="11" fill="#666">Không</text>
+  <line x1="175" y1="430" x2="90" y2="430" stroke="#E91E63" stroke-width="2"/>
+  <line x1="90" y1="430" x2="90" y2="270" stroke="#E91E63" stroke-width="2"/>
+  <line x1="90" y1="270" x2="110" y2="270" stroke="#E91E63" stroke-width="2" marker-end="url(#arrowhead)"/>
+  
+  <!-- Yes path -->
+  <text x="225" y="510" font-family="Arial" font-size="11" text-anchor="middle" fill="#666">Có</text>
+  <line x1="225" y1="480" x2="225" y2="540" stroke="#E91E63" stroke-width="2" marker-end="url(#arrowhead)"/>
+  
+  <!-- Arrow to system -->
+  <line x1="225" y1="540" x2="470" y2="540" stroke="#E91E63" stroke-width="2" marker-end="url(#arrowhead)"/>
+  
+  <!-- Tổng hợp chi phí -->
+  <rect x="440" y="520" width="240" height="60" rx="20" fill="#FFF9C4" stroke="#F9A825" stroke-width="2"/>
+  <text x="560" y="540" font-family="Arial" font-size="11" text-anchor="middle">Tổng hợp chi phí:</text>
+  <text x="560" y="555" font-family="Arial" font-size="10" text-anchor="middle">Tiền khám + Đơn thuốc + Dịch vụ</text>
+  <text x="560" y="570" font-family="Arial" font-size="10" text-anchor="middle">cận lâm sàng (nếu có)</text>
+  
+  <!-- Arrow back -->
+  <line x1="440" y1="550" x2="225" y2="550" stroke="#E91E63" stroke-width="2"/>
+  <line x1="225" y1="550" x2="225" y2="610" stroke="#E91E63" stroke-width="2" marker-end="url(#arrowhead)"/>
+  
+  <!-- Xác nhận các khoản phí -->
+  <rect x="125" y="610" width="200" height="40" rx="20" fill="#FFF9C4" stroke="#F9A825" stroke-width="2"/>
+  <text x="225" y="635" font-family="Arial" font-size="12" text-anchor="middle">Xác nhận các khoản phí với BN</text>
+  <line x1="225" y1="650" x2="225" y2="690" stroke="#E91E63" stroke-width="2" marker-end="url(#arrowhead)"/>
+  
+  <!-- Chọn phương thức thanh toán -->
+  <rect x="100" y="690" width="250" height="40" rx="20" fill="#FFF9C4" stroke="#F9A825" stroke-width="2"/>
+  <text x="225" y="715" font-family="Arial" font-size="12" text-anchor="middle">Chọn phương thức: Tiền mặt/Chuyển khoản</text>
+  <line x1="225" y1="730" x2="225" y2="780" stroke="#E91E63" stroke-width="2" marker-end="url(#arrowhead)"/>
+  
+  <!-- Decision - Phương thức? -->
+  <path d="M 225 780 L 275 830 L 225 880 L 175 830 Z" fill="#FFE082" stroke="#F57C00" stroke-width="2"/>
+  <text x="225" y="825" font-family="Arial" font-size="10" text-anchor="middle">Phương</text>
+  <text x="225" y="840" font-family="Arial" font-size="10" text-anchor="middle">thức?</text>
+  
+  <!-- Tiền mặt path -->
+  <text x="115" y="835" font-family="Arial" font-size="11" fill="#666">Tiền mặt</text>
+  <line x1="175" y1="830" x2="70" y2="830" stroke="#E91E63" stroke-width="2"/>
+  <line x1="70" y1="830" x2="70" y2="940" stroke="#E91E63" stroke-width="2"/>
+  <line x1="70" y1="940" x2="135" y2="940" stroke="#E91E63" stroke-width="2" marker-end="url(#arrowhead)"/>
+  
+  <!-- Chuyển khoản path -->
+  <text x="305" y="835" font-family="Arial" font-size="11" fill="#666">Chuyển khoản</text>
+  <line x1="275" y1="830" x2="380" y2="830" stroke="#E91E63" stroke-width="2"/>
+  <line x1="380" y1="830" x2="380" y2="940" stroke="#E91E63" stroke-width="2"/>
+  <line x1="380" y1="940" x2="315" y2="940" stroke="#E91E63" stroke-width="2" marker-end="url(#arrowhead)"/>
+  
+  <!-- Xác nhận đã nhận tiền -->
+  <rect x="135" y="940" width="180" height="40" rx="20" fill="#FFF9C4" stroke="#F9A825" stroke-width="2"/>
+  <text x="225" y="965" font-family="Arial" font-size="12" text-anchor="middle">Xác nhận đã nhận đủ tiền</text>
+  <line x1="225" y1="980" x2="225" y2="1010" stroke="#E91E63" stroke-width="2" marker-end="url(#arrowhead)"/>
+  
+  <!-- Arrow to system -->
+  <line x1="225" y1="1010" x2="470" y2="1010" stroke="#E91E63" stroke-width="2" marker-end="url(#arrowhead)"/>
+  
+  <!-- Tạo hóa đơn -->
+  <rect x="470" y="990" width="180" height="40" rx="20" fill="#FFF9C4" stroke="#F9A825" stroke-width="2"/>
+  <text x="560" y="1015" font-family="Arial" font-size="12" text-anchor="middle">Tạo hóa đơn thanh toán</text>
+  <line x1="560" y1="1030" x2="560" y2="1070" stroke="#E91E63" stroke-width="2" marker-end="url(#arrowhead)"/>
+  
+  <!-- Cập nhật trạng thái -->
+  <rect x="445" y="1070" width="230" height="40" rx="20" fill="#FFF9C4" stroke="#F9A825" stroke-width="2"/>
+  <text x="560" y="1095" font-family="Arial" font-size="12" text-anchor="middle">Cập nhật trạng thái "Đã thanh toán"</text>
+  
+  <!-- Arrow back -->
+  <line x1="445" y1="1090" x2="225" y2="1090" stroke="#E91E63" stroke-width="2"/>
+  <line x1="225" y1="1090" x2="225" y2="1150" stroke="#E91E63" stroke-width="2" marker-end="url(#arrowhead)"/>
+  
+  <!-- In/Gửi hóa đơn -->
+  <rect x="115" y="1150" width="220" height="40" rx="20" fill="#FFF9C4" stroke="#F9A825" stroke-width="2"/>
+  <text x="225" y="1175" font-family="Arial" font-size="12" text-anchor="middle">In hoặc gửi hóa đơn qua email/SMS</text>
+  
+  <!-- End node -->
+  <circle cx="225" cy="1210" r="12" fill="#000"/>
+  <circle cx="225" cy="1210" r="8" fill="#fff"/>
+  <line x1="225" y1="1190" x2="225" y2="1198" stroke="#E91E63" stroke-width="2" marker-end="url(#arrowhead)"/>
+  
+  <!-- Arrow markers -->
+  <defs>
+    <marker id="arrowhead" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+      <polygon points="0 0, 10 3, 0 6" fill="#E91E63" />
+    </marker>
+  </defs>
+</svg>

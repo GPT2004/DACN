@@ -1,0 +1,98 @@
+<!-- templates/heart_form.html -->
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dự đoán nguy cơ bệnh tim mạch</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-50 text-gray-800">
+  <div class="max-w-3xl mx-auto mt-10 bg-white shadow-lg rounded-lg p-8">
+    <h1 class="text-3xl font-bold text-center mb-6 text-red-700">
+      💓 Dự đoán nguy cơ Bệnh Tim Mạch
+    </h1>
+
+    <form method="post" class="space-y-4">
+      {% for name, field in fields.items() %}
+        <div>
+          <label class="block font-semibold mb-1 text-gray-700">
+            {{ field.label }}
+          </label>
+
+          {% if field.type == 'select' %}
+            <select name="{{ name }}" class="border border-gray-300 rounded-md p-2 w-full focus:ring-2 focus:ring-blue-400">
+              {% for opt in field.options %}
+                <option value="{{ opt }}">{{ opt }}</option>
+              {% endfor %}
+            </select>
+          {% else %}
+            <input type="{{ field.type }}" name="{{ name }}" step="{{ field.step }}" 
+                   class="border border-gray-300 rounded-md p-2 w-full focus:ring-2 focus:ring-blue-400"/>
+          {% endif %}
+        </div>
+      {% endfor %}
+
+      <div class="flex items-center justify-between mt-6">
+        <div>
+          <label for="threshold" class="font-semibold">Ngưỡng dự đoán (0–1):</label>
+          <input type="number" name="threshold" id="threshold" min="0" max="1" step="0.01"
+                 value="{{ default_threshold }}" class="border p-2 rounded-md w-24 text-center">
+        </div>
+        <button type="submit"
+                class="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-5 py-2 rounded-md shadow">
+          🔍 Dự đoán
+        </button>
+      </div>
+    </form>
+
+    {% if result %}
+      <div class="mt-8 border-t pt-6">
+        <h2 class="text-xl font-semibold mb-4">Kết quả dự đoán</h2>
+        <div class="p-4 rounded-md {{ result.band_css }}">
+          <p><b>Xác suất mắc bệnh:</b> {{ result.prob }}</p>
+          <p><b>Ngưỡng phân loại:</b> {{ result.threshold }}</p>
+          <p><b>Mức nguy cơ:</b> 
+            <span class="font-bold text-lg">{{ result.band }}</span>
+          </p>
+          <p><b>Kết luận:</b>
+            {% if result.pred == 1 %}
+              <span class="text-red-700 font-semibold">🩸 Có nguy cơ cao mắc bệnh tim</span>
+            {% else %}
+              <span class="text-green-700 font-semibold">✅ Nguy cơ thấp / bình thường</span>
+            {% endif %}
+          </p>
+        </div>
+
+        <div class="mt-6">
+          <h3 class="font-semibold text-gray-700 mb-2">Dữ liệu đã nhập:</h3>
+          <table class="min-w-full border border-gray-200 text-sm">
+            <thead class="bg-gray-100">
+              <tr>
+                <th class="p-2 text-left border">Trường</th>
+                <th class="p-2 text-left border">Giá trị</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for k, v in result.input.items() %}
+                <tr>
+                  <td class="p-2 border">{{ k }}</td>
+                  <td class="p-2 border">{{ v }}</td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    {% elif error %}
+      <div class="mt-6 text-red-600 font-semibold">
+        ⚠️ {{ error }}
+      </div>
+    {% endif %}
+  </div>
+
+  <footer class="text-center text-gray-500 mt-10 mb-4 text-sm">
+    © 2025 Heart Disease Prediction Form — Flask + RandomForest
+  </footer>
+</body>
+</html>

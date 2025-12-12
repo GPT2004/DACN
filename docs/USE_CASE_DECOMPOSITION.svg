@@ -1,0 +1,259 @@
+<svg viewBox="0 0 1400 1000" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <style>
+      .class-box { fill: #FFFACD; stroke: #000; stroke-width: 1.5; }
+      .class-title { fill: #000; font-family: Arial; font-size: 14px; font-weight: bold; }
+      .class-attr { fill: #000; font-family: Arial; font-size: 11px; }
+      .relation-line { stroke: #000; stroke-width: 1.5; fill: none; }
+      .relation-text { fill: #000; font-family: Arial; font-size: 10px; }
+      .arrow { fill: none; stroke: #000; stroke-width: 1.5; }
+    </style>
+  </defs>
+
+  <!-- User (Central) -->
+  <rect x="550" y="50" width="180" height="190" class="class-box"/>
+  <text x="640" y="72" text-anchor="middle" class="class-title">User</text>
+  <line x1="550" y1="78" x2="730" y2="78" class="relation-line"/>
+  <text x="560" y="95" class="class-attr">+id: Integer</text>
+  <text x="560" y="110" class="class-attr">+email: Char</text>
+  <text x="560" y="125" class="class-attr">+password: Char</text>
+  <text x="560" y="140" class="class-attr">+full_name: Char</text>
+  <text x="560" y="155" class="class-attr">+phone: Char</text>
+  <text x="560" y="170" class="class-attr">+role_id: Integer</text>
+  <line x1="550" y1="180" x2="730" y2="180" class="relation-line"/>
+  <text x="560" y="197" class="class-attr">+login()</text>
+  <text x="560" y="212" class="class-attr">+logout()</text>
+  <text x="560" y="227" class="class-attr">+updateProfile()</text>
+
+  <!-- Role -->
+  <rect x="820" y="50" width="140" height="140" class="class-box"/>
+  <text x="890" y="72" text-anchor="middle" class="class-title">Role</text>
+  <line x1="820" y1="78" x2="960" y2="78" class="relation-line"/>
+  <text x="830" y="95" class="class-attr">+id: Integer</text>
+  <text x="830" y="110" class="class-attr">+name: Char</text>
+  <text x="830" y="125" class="class-attr">+description: Text</text>
+  <line x1="820" y1="135" x2="960" y2="135" class="relation-line"/>
+  <text x="830" y="152" class="class-attr">+getPermissions()</text>
+  <text x="830" y="167" class="class-attr">+assignRole()</text>
+
+  <!-- Patient -->
+  <rect x="50" y="320" width="180" height="210" class="class-box"/>
+  <text x="140" y="342" text-anchor="middle" class="class-title">Patient</text>
+  <line x1="50" y1="348" x2="230" y2="348" class="relation-line"/>
+  <text x="60" y="365" class="class-attr">+id: Integer</text>
+  <text x="60" y="380" class="class-attr">+user_id: Integer</text>
+  <text x="60" y="395" class="class-attr">+full_name: Char</text>
+  <text x="60" y="410" class="class-attr">+gender: Char</text>
+  <text x="60" y="425" class="class-attr">+blood_type: Char</text>
+  <text x="60" y="440" class="class-attr">+allergies: Text</text>
+  <text x="60" y="455" class="class-attr">+emergency_contact: JSONB</text>
+  <line x1="50" y1="465" x2="230" y2="465" class="relation-line"/>
+  <text x="60" y="482" class="class-attr">+createProfile()</text>
+  <text x="60" y="497" class="class-attr">+updateInfo()</text>
+  <text x="60" y="512" class="class-attr">+viewHistory()</text>
+
+  <!-- Doctor -->
+  <rect x="290" y="320" width="180" height="190" class="class-box"/>
+  <text x="380" y="342" text-anchor="middle" class="class-title">Doctor</text>
+  <line x1="290" y1="348" x2="470" y2="348" class="relation-line"/>
+  <text x="300" y="365" class="class-attr">+id: Integer</text>
+  <text x="300" y="380" class="class-attr">+user_id: Integer</text>
+  <text x="300" y="395" class="class-attr">+license_number: Char</text>
+  <text x="300" y="410" class="class-attr">+specialties: Array</text>
+  <text x="300" y="425" class="class-attr">+consultation_fee: Integer</text>
+  <text x="300" y="440" class="class-attr">+rating: Numeric</text>
+  <line x1="290" y1="450" x2="470" y2="450" class="relation-line"/>
+  <text x="300" y="467" class="class-attr">+manageSchedule()</text>
+  <text x="300" y="482" class="class-attr">+prescribeMedicine()</text>
+  <text x="300" y="497" class="class-attr">+updateRecord()</text>
+
+  <!-- Appointment -->
+  <rect x="530" y="320" width="200" height="210" class="class-box"/>
+  <text x="630" y="342" text-anchor="middle" class="class-title">Appointment</text>
+  <line x1="530" y1="348" x2="730" y2="348" class="relation-line"/>
+  <text x="540" y="365" class="class-attr">+id: Integer</text>
+  <text x="540" y="380" class="class-attr">+patient_id: Integer</text>
+  <text x="540" y="395" class="class-attr">+doctor_id: Integer</text>
+  <text x="540" y="410" class="class-attr">+timeslot_id: Integer</text>
+  <text x="540" y="425" class="class-attr">+appointment_date: Date</text>
+  <text x="540" y="440" class="class-attr">+status: Enum</text>
+  <text x="540" y="455" class="class-attr">+reason: Text</text>
+  <line x1="530" y1="465" x2="730" y2="465" class="relation-line"/>
+  <text x="540" y="482" class="class-attr">+create()</text>
+  <text x="540" y="497" class="class-attr">+cancel()</text>
+  <text x="540" y="512" class="class-attr">+checkIn()</text>
+
+  <!-- TimeSlot -->
+  <rect x="800" y="320" width="160" height="190" class="class-box"/>
+  <text x="880" y="342" text-anchor="middle" class="class-title">TimeSlot</text>
+  <line x1="800" y1="348" x2="960" y2="348" class="relation-line"/>
+  <text x="810" y="365" class="class-attr">+id: Integer</text>
+  <text x="810" y="380" class="class-attr">+doctor_id: Integer</text>
+  <text x="810" y="395" class="class-attr">+date: Date</text>
+  <text x="810" y="410" class="class-attr">+start_time: Time</text>
+  <text x="810" y="425" class="class-attr">+end_time: Time</text>
+  <text x="810" y="440" class="class-attr">+is_active: Boolean</text>
+  <line x1="800" y1="450" x2="960" y2="450" class="relation-line"/>
+  <text x="810" y="467" class="class-attr">+create()</text>
+  <text x="810" y="482" class="class-attr">+activate()</text>
+  <text x="810" y="497" class="class-attr">+deactivate()</text>
+
+  <!-- Medical Record -->
+  <rect x="50" y="590" width="200" height="190" class="class-box"/>
+  <text x="150" y="612" text-anchor="middle" class="class-title">Medical Record</text>
+  <line x1="50" y1="618" x2="250" y2="618" class="relation-line"/>
+  <text x="60" y="635" class="class-attr">+id: Integer</text>
+  <text x="60" y="650" class="class-attr">+appointment_id: Integer</text>
+  <text x="60" y="665" class="class-attr">+patient_id: Integer</text>
+  <text x="60" y="680" class="class-attr">+doctor_id: Integer</text>
+  <text x="60" y="695" class="class-attr">+diagnosis: Text</text>
+  <text x="60" y="710" class="class-attr">+exam_results: Text</text>
+  <line x1="50" y1="720" x2="250" y2="720" class="relation-line"/>
+  <text x="60" y="737" class="class-attr">+create()</text>
+  <text x="60" y="752" class="class-attr">+update()</text>
+  <text x="60" y="767" class="class-attr">+viewHistory()</text>
+
+  <!-- Prescription -->
+  <rect x="310" y="590" width="180" height="190" class="class-box"/>
+  <text x="400" y="612" text-anchor="middle" class="class-title">Prescription</text>
+  <line x1="310" y1="618" x2="490" y2="618" class="relation-line"/>
+  <text x="320" y="635" class="class-attr">+id: Integer</text>
+  <text x="320" y="650" class="class-attr">+appointment_id: Integer</text>
+  <text x="320" y="665" class="class-attr">+doctor_id: Integer</text>
+  <text x="320" y="680" class="class-attr">+patient_id: Integer</text>
+  <text x="320" y="695" class="class-attr">+items: JSONB</text>
+  <text x="320" y="710" class="class-attr">+status: Enum</text>
+  <line x1="310" y1="720" x2="490" y2="720" class="relation-line"/>
+  <text x="320" y="737" class="class-attr">+create()</text>
+  <text x="320" y="752" class="class-attr">+approve()</text>
+  <text x="320" y="767" class="class-attr">+dispense()</text>
+
+  <!-- Medicine -->
+  <rect x="550" y="590" width="160" height="170" class="class-box"/>
+  <text x="630" y="612" text-anchor="middle" class="class-title">Medicine</text>
+  <line x1="550" y1="618" x2="710" y2="618" class="relation-line"/>
+  <text x="560" y="635" class="class-attr">+id: Integer</text>
+  <text x="560" y="650" class="class-attr">+name: Char</text>
+  <text x="560" y="665" class="class-attr">+code: Char</text>
+  <text x="560" y="680" class="class-attr">+unit: Char</text>
+  <text x="560" y="695" class="class-attr">+price: Integer</text>
+  <line x1="550" y1="705" x2="710" y2="705" class="relation-line"/>
+  <text x="560" y="722" class="class-attr">+add()</text>
+  <text x="560" y="737" class="class-attr">+update()</text>
+  <text x="560" y="752" class="class-attr">+delete()</text>
+
+  <!-- Stock -->
+  <rect x="770" y="590" width="180" height="170" class="class-box"/>
+  <text x="860" y="612" text-anchor="middle" class="class-title">Stock</text>
+  <line x1="770" y1="618" x2="950" y2="618" class="relation-line"/>
+  <text x="780" y="635" class="class-attr">+id: Integer</text>
+  <text x="780" y="650" class="class-attr">+medicine_id: Integer</text>
+  <text x="780" y="665" class="class-attr">+batch_number: Char</text>
+  <text x="780" y="680" class="class-attr">+expiry_date: Date</text>
+  <text x="780" y="695" class="class-attr">+quantity: Integer</text>
+  <line x1="770" y1="705" x2="950" y2="705" class="relation-line"/>
+  <text x="780" y="722" class="class-attr">+import()</text>
+  <text x="780" y="737" class="class-attr">+export()</text>
+  <text x="780" y="752" class="class-attr">+checkExpiry()</text>
+
+  <!-- Invoice -->
+  <rect x="1020" y="590" width="180" height="190" class="class-box"/>
+  <text x="1110" y="612" text-anchor="middle" class="class-title">Invoice</text>
+  <line x1="1020" y1="618" x2="1200" y2="618" class="relation-line"/>
+  <text x="1030" y="635" class="class-attr">+id: Integer</text>
+  <text x="1030" y="650" class="class-attr">+appointment_id: Integer</text>
+  <text x="1030" y="665" class="class-attr">+patient_id: Integer</text>
+  <text x="1030" y="680" class="class-attr">+items: JSONB</text>
+  <text x="1030" y="695" class="class-attr">+total: Integer</text>
+  <text x="1030" y="710" class="class-attr">+status: Enum</text>
+  <line x1="1020" y1="720" x2="1200" y2="720" class="relation-line"/>
+  <text x="1030" y="737" class="class-attr">+create()</text>
+  <text x="1030" y="752" class="class-attr">+pay()</text>
+  <text x="1030" y="767" class="class-attr">+print()</text>
+
+  <!-- Specialty -->
+  <rect x="1020" y="320" width="160" height="150" class="class-box"/>
+  <text x="1100" y="342" text-anchor="middle" class="class-title">Specialty</text>
+  <line x1="1020" y1="348" x2="1180" y2="348" class="relation-line"/>
+  <text x="1030" y="365" class="class-attr">+id: Integer</text>
+  <text x="1030" y="380" class="class-attr">+name: Char</text>
+  <text x="1030" y="395" class="class-attr">+description: Text</text>
+  <line x1="1020" y1="405" x2="1180" y2="405" class="relation-line"/>
+  <text x="1030" y="422" class="class-attr">+add()</text>
+  <text x="1030" y="437" class="class-attr">+update()</text>
+  <text x="1030" y="452" class="class-attr">+delete()</text>
+
+  <!-- Room -->
+  <rect x="1240" y="320" width="140" height="150" class="class-box"/>
+  <text x="1310" y="342" text-anchor="middle" class="class-title">Room</text>
+  <line x1="1240" y1="348" x2="1380" y2="348" class="relation-line"/>
+  <text x="1250" y="365" class="class-attr">+id: Integer</text>
+  <text x="1250" y="380" class="class-attr">+name: Char</text>
+  <text x="1250" y="395" class="class-attr">+type: Char</text>
+  <line x1="1240" y1="405" x2="1380" y2="405" class="relation-line"/>
+  <text x="1250" y="422" class="class-attr">+add()</text>
+  <text x="1250" y="437" class="class-attr">+update()</text>
+  <text x="1250" y="452" class="class-attr">+delete()</text>
+
+  <!-- Relationships -->
+  
+  <!-- User to Role (1 to 1) -->
+  <path d="M 730 120 L 820 120" class="relation-line"/>
+  <text x="770" y="115" class="relation-text">Has</text>
+  
+  <!-- User to Patient (1 to 0..1) -->
+  <path d="M 590 240 L 140 320" class="relation-line"/>
+  <text x="350" y="270" class="relation-text">Owns</text>
+  
+  <!-- User to Doctor (1 to 0..1) -->
+  <path d="M 640 240 L 380 320" class="relation-line"/>
+  <text x="500" y="270" class="relation-text">Is</text>
+  
+  <!-- Patient to Appointment (1 to many) -->
+  <path d="M 230 400 L 530 400" class="relation-line"/>
+  <text x="360" y="395" class="relation-text">Books</text>
+  <polygon points="530,400 520,395 520,405" fill="#000"/>
+  
+  <!-- Doctor to Appointment (1 to many) -->
+  <path d="M 470 400 L 530 400" class="relation-line"/>
+  <text x="480" y="395" class="relation-text">Attends</text>
+  <polygon points="530,400 520,395 520,405" fill="#000"/>
+  
+  <!-- Doctor to TimeSlot (1 to many) -->
+  <path d="M 470 400 L 800 400" class="relation-line"/>
+  <text x="620" y="395" class="relation-text">Manages</text>
+  <polygon points="800,400 790,395 790,405" fill="#000"/>
+  
+  <!-- Appointment to TimeSlot (many to 1) -->
+  <path d="M 730 400 L 800 400" class="relation-line"/>
+  <text x="750" y="395" class="relation-text">Uses</text>
+  
+  <!-- Appointment to Medical Record (1 to 0..1) -->
+  <path d="M 580 530 L 150 590" class="relation-line"/>
+  <text x="340" y="555" class="relation-text">Creates</text>
+  
+  <!-- Appointment to Prescription (1 to 0..1) -->
+  <path d="M 620 530 L 400 590" class="relation-line"/>
+  <text x="490" y="555" class="relation-text">Generates</text>
+  
+  <!-- Prescription to Medicine (many to many) -->
+  <path d="M 490 660 L 550 660" class="relation-line"/>
+  <text x="500" y="655" class="relation-text">Contains</text>
+  
+  <!-- Medicine to Stock (1 to many) -->
+  <path d="M 710 660 L 770 660" class="relation-line"/>
+  <text x="720" y="655" class="relation-text">Has</text>
+  <polygon points="770,660 760,655 760,665" fill="#000"/>
+  
+  <!-- Appointment to Invoice (1 to 0..1) -->
+  <path d="M 730 400 L 1020 660" class="relation-line"/>
+  <text x="850" y="520" class="relation-text">Generates</text>
+
+  <!-- Doctor to Specialty (many to many) -->
+  <path d="M 470 360 L 1020 360" class="relation-line"/>
+  <text x="720" y="355" class="relation-text">Specializes In</text>
+
+  <!-- Title -->
+  <text x="700" y="30" text-anchor="middle" style="font-size: 18px; font-weight: bold; fill: #000;">Clinic Management System - Class Diagram</text>
+
+</svg>

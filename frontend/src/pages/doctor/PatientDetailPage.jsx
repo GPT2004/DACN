@@ -1,0 +1,3 @@
+import React, {useEffect, useState} from 'react';
+import { getPatientDetail } from '../../services/doctorService';
+export default function PatientDetailPage({params}){ const [patient,setPatient]=useState(null); useEffect(()=>{ (async ()=>{ const id = (params && params.id) || null; if(id){ const r = await getPatientDetail(id); if(r && r.data) setPatient(r.data); } })(); },[params]); return (<div className='p-6'><h1 className='text-2xl font-bold mb-4'>Chi tiết bệnh nhân</h1><div className='bg-white p-4 rounded shadow'>{patient? (<div><div>Tên: {patient.fullName||patient.name}</div><div>Tuổi: {patient.age||'-'}</div></div>): 'Không tìm thấy bệnh nhân'}</div></div>); }

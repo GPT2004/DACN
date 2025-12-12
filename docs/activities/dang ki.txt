@@ -1,0 +1,132 @@
+<svg viewBox="0 0 800 1200" xmlns="http://www.w3.org/2000/svg">
+  <!-- Title -->
+  <text x="400" y="30" font-family="Arial" font-size="18" font-weight="bold" text-anchor="middle" fill="#333">
+    Biểu đồ hoạt động Đăng ký tài khoản
+  </text>
+  
+  <!-- Swimlanes -->
+  <rect x="50" y="60" width="700" height="1080" fill="none" stroke="#333" stroke-width="2"/>
+  <line x1="400" y1="60" x2="400" y2="1140" stroke="#333" stroke-width="2"/>
+  
+  <!-- Swimlane Headers -->
+  <rect x="50" y="60" width="350" height="40" fill="#f0f0f0" stroke="#333" stroke-width="1"/>
+  <rect x="400" y="60" width="350" height="40" fill="#f0f0f0" stroke="#333" stroke-width="1"/>
+  
+  <text x="225" y="85" font-family="Arial" font-size="14" font-weight="bold" text-anchor="middle">Khách vãng lai</text>
+  <text x="575" y="85" font-family="Arial" font-size="14" font-weight="bold" text-anchor="middle">Hệ thống</text>
+  
+  <!-- Start node -->
+  <circle cx="225" cy="130" r="12" fill="#000"/>
+  
+  <!-- Truy cập trang đăng ký -->
+  <rect x="145" y="170" width="160" height="40" rx="20" fill="#FFF9C4" stroke="#F9A825" stroke-width="2"/>
+  <text x="225" y="195" font-family="Arial" font-size="12" text-anchor="middle">Truy cập trang đăng ký</text>
+  <line x1="225" y1="142" x2="225" y2="170" stroke="#E91E63" stroke-width="2" marker-end="url(#arrowhead)"/>
+  
+  <!-- Arrow to system -->
+  <line x1="225" y1="210" x2="225" y2="240" stroke="#E91E63" stroke-width="2"/>
+  <line x1="225" y1="240" x2="480" y2="240" stroke="#E91E63" stroke-width="2" marker-end="url(#arrowhead)"/>
+  
+  <!-- Hiển thị form đăng ký -->
+  <rect x="465" y="220" width="190" height="40" rx="20" fill="#FFF9C4" stroke="#F9A825" stroke-width="2"/>
+  <text x="560" y="245" font-family="Arial" font-size="12" text-anchor="middle">Hiển thị form đăng ký</text>
+  <line x1="465" y1="240" x2="320" y2="240" stroke="#E91E63" stroke-width="2"/>
+  <line x1="320" y1="240" x2="320" y2="300" stroke="#E91E63" stroke-width="2" marker-end="url(#arrowhead)"/>
+  
+  <!-- Nhập thông tin -->
+  <rect x="110" y="300" width="230" height="60" rx="20" fill="#FFF9C4" stroke="#F9A825" stroke-width="2"/>
+  <text x="225" y="320" font-family="Arial" font-size="11" text-anchor="middle">Nhập thông tin:</text>
+  <text x="225" y="335" font-family="Arial" font-size="10" text-anchor="middle">Họ tên, Email, SĐT, Mật khẩu,</text>
+  <text x="225" y="350" font-family="Arial" font-size="10" text-anchor="middle">Xác nhận mật khẩu</text>
+  <line x1="225" y1="360" x2="225" y2="390" stroke="#E91E63" stroke-width="2" marker-end="url(#arrowhead)"/>
+  
+  <!-- Nhấn nút Đăng ký -->
+  <rect x="160" y="390" width="130" height="40" rx="20" fill="#FFF9C4" stroke="#F9A825" stroke-width="2"/>
+  <text x="225" y="415" font-family="Arial" font-size="12" text-anchor="middle">Nhấn nút Đăng ký</text>
+  <line x1="225" y1="430" x2="225" y2="460" stroke="#E91E63" stroke-width="2"/>
+  <line x1="225" y1="460" x2="470" y2="460" stroke="#E91E63" stroke-width="2" marker-end="url(#arrowhead)"/>
+  
+  <!-- Kiểm tra ràng buộc dữ liệu -->
+  <rect x="455" y="440" width="210" height="40" rx="20" fill="#FFF9C4" stroke="#F9A825" stroke-width="2"/>
+  <text x="560" y="465" font-family="Arial" font-size="12" text-anchor="middle">Kiểm tra ràng buộc dữ liệu</text>
+  <line x1="560" y1="480" x2="560" y2="530" stroke="#E91E63" stroke-width="2" marker-end="url(#arrowhead)"/>
+  
+  <!-- Decision - Dữ liệu hợp lệ? -->
+  <path d="M 560 530 L 610 580 L 560 630 L 510 580 Z" fill="#FFE082" stroke="#F57C00" stroke-width="2"/>
+  <text x="560" y="575" font-family="Arial" font-size="10" text-anchor="middle">Dữ liệu</text>
+  <text x="560" y="590" font-family="Arial" font-size="10" text-anchor="middle">hợp lệ?</text>
+  
+  <!-- No path -->
+  <text x="650" y="585" font-family="Arial" font-size="11" fill="#666">Không</text>
+  <line x1="610" y1="580" x2="680" y2="580" stroke="#E91E63" stroke-width="2" marker-end="url(#arrowhead)"/>
+  
+  <!-- Hiển thị lỗi validation -->
+  <rect x="680" y="560" width="60" height="60" rx="20" fill="#FFF9C4" stroke="#F9A825" stroke-width="2"/>
+  <text x="710" y="580" font-family="Arial" font-size="9" text-anchor="middle">Hiển thị</text>
+  <text x="710" y="593" font-family="Arial" font-size="9" text-anchor="middle">lỗi</text>
+  <text x="710" y="606" font-family="Arial" font-size="9" text-anchor="middle">validation</text>
+  
+  <!-- Loop back -->
+  <line x1="710" y1="560" x2="710" y2="330" stroke="#E91E63" stroke-width="2"/>
+  <line x1="710" y1="330" x2="340" y2="330" stroke="#E91E63" stroke-width="2" marker-end="url(#arrowhead)"/>
+  
+  <!-- Yes path -->
+  <text x="560" y="660" font-family="Arial" font-size="11" text-anchor="middle" fill="#666">Có</text>
+  <line x1="560" y1="630" x2="560" y2="690" stroke="#E91E63" stroke-width="2" marker-end="url(#arrowhead)"/>
+  
+  <!-- Kiểm tra email/SĐT tồn tại -->
+  <rect x="445" y="690" width="230" height="40" rx="20" fill="#FFF9C4" stroke="#F9A825" stroke-width="2"/>
+  <text x="560" y="715" font-family="Arial" font-size="12" text-anchor="middle">Kiểm tra email/SĐT tồn tại</text>
+  <line x1="560" y1="730" x2="560" y2="780" stroke="#E91E63" stroke-width="2" marker-end="url(#arrowhead)"/>
+  
+  <!-- Decision - Đã tồn tại? -->
+  <path d="M 560 780 L 610 830 L 560 880 L 510 830 Z" fill="#FFE082" stroke="#F57C00" stroke-width="2"/>
+  <text x="560" y="825" font-family="Arial" font-size="10" text-anchor="middle">Đã tồn tại?</text>
+  
+  <!-- Yes path - Already exists -->
+  <text x="650" y="835" font-family="Arial" font-size="11" fill="#666">Có</text>
+  <line x1="610" y1="830" x2="680" y2="830" stroke="#E91E63" stroke-width="2" marker-end="url(#arrowhead)"/>
+  
+  <!-- Thông báo đã tồn tại -->
+  <rect x="680" y="810" width="60" height="60" rx="20" fill="#FFF9C4" stroke="#F9A825" stroke-width="2"/>
+  <text x="710" y="830" font-family="Arial" font-size="9" text-anchor="middle">Thông báo</text>
+  <text x="710" y="843" font-family="Arial" font-size="9" text-anchor="middle">đã tồn tại</text>
+  <text x="710" y="856" font-family="Arial" font-size="9" text-anchor="middle">tài khoản</text>
+  
+  <!-- End for existing account -->
+  <line x1="710" y1="870" x2="710" y2="920" stroke="#E91E63" stroke-width="2"/>
+  <circle cx="710" cy="940" r="12" fill="#000"/>
+  <circle cx="710" cy="940" r="8" fill="#fff"/>
+  <line x1="710" y1="920" x2="710" y2="928" stroke="#E91E63" stroke-width="2" marker-end="url(#arrowhead)"/>
+  
+  <!-- No path - Create account -->
+  <text x="560" y="910" font-family="Arial" font-size="11" text-anchor="middle" fill="#666">Không</text>
+  <line x1="560" y1="880" x2="560" y2="940" stroke="#E91E63" stroke-width="2" marker-end="url(#arrowhead)"/>
+  
+  <!-- Tạo tài khoản Patient -->
+  <rect x="460" y="940" width="200" height="40" rx="20" fill="#FFF9C4" stroke="#F9A825" stroke-width="2"/>
+  <text x="560" y="965" font-family="Arial" font-size="12" text-anchor="middle">Tạo tài khoản Patient</text>
+  <line x1="560" y1="980" x2="560" y2="1010" stroke="#E91E63" stroke-width="2" marker-end="url(#arrowhead)"/>
+  
+  <!-- Gửi email xác minh -->
+  <rect x="465" y="1010" width="190" height="40" rx="20" fill="#FFF9C4" stroke="#F9A825" stroke-width="2"/>
+  <text x="560" y="1035" font-family="Arial" font-size="12" text-anchor="middle">Gửi email xác minh (OTP)</text>
+  <line x1="465" y1="1030" x2="320" y2="1030" stroke="#E91E63" stroke-width="2"/>
+  <line x1="320" y1="1030" x2="320" y2="1070" stroke="#E91E63" stroke-width="2" marker-end="url(#arrowhead)"/>
+  
+  <!-- Thông báo thành công -->
+  <rect x="130" y="1070" width="190" height="40" rx="20" fill="#FFF9C4" stroke="#F9A825" stroke-width="2"/>
+  <text x="225" y="1095" font-family="Arial" font-size="12" text-anchor="middle">Thông báo đăng ký thành công</text>
+  
+  <!-- End node -->
+  <circle cx="225" cy="1130" r="12" fill="#000"/>
+  <circle cx="225" cy="1130" r="8" fill="#fff"/>
+  <line x1="225" y1="1110" x2="225" y2="1118" stroke="#E91E63" stroke-width="2" marker-end="url(#arrowhead)"/>
+  
+  <!-- Arrow markers -->
+  <defs>
+    <marker id="arrowhead" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+      <polygon points="0 0, 10 3, 0 6" fill="#E91E63" />
+    </marker>
+  </defs>
+</svg>

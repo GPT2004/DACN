@@ -1,0 +1,3 @@
+import React, {useEffect, useState} from 'react';
+import { getInvoicesByPatient } from '../../services/invoiceService';
+export default function InvoicesPage(){ const [invoices,setInvoices]=useState([]); useEffect(()=>{ (async ()=>{ const r = await getInvoicesByPatient(1); if(r && r.data) setInvoices(r.data); })(); },[]); return (<div className='p-6'><h1 className='text-2xl font-bold mb-4'>Hóa đơn</h1><div className='bg-white p-4 rounded shadow'>{invoices.length? invoices.map(inv=>(<div key={inv.id} className='py-2 border-b'>Mã: {inv.id} - Tổng: {inv.total}</div>)):'Không có hóa đơn'}</div></div>); }
