@@ -272,6 +272,45 @@ class PrescriptionService {
       }
     }
 
+    // Enrich prescription items with actual medicine names and IDs from DB
+    const rawItems = typeof prescription.items === 'string' ? JSON.parse(prescription.items) : prescription.items || [];
+    const enrichedItems = await Promise.all(rawItems.map(async (item) => {
+      // Try to find medicine by ID first
+      if (item.medicine_id) {
+        try {
+          const medicine = await prisma.medicines.findUnique({
+            where: { id: parseInt(item.medicine_id) },
+            select: { id: true, name: true }
+          });
+          if (medicine && medicine.name) {
+            return { ...item, medicine_id: medicine.id, medicine_name: medicine.name };
+          }
+        } catch (e) {
+          // ignore and continue to next fallback
+        }
+      }
+      
+      // If ID didn't work, try to find by medicine_name
+      if (item.medicine_name && item.medicine_name !== 'Unknown') {
+        try {
+          const medicine = await prisma.medicines.findFirst({
+            where: { name: item.medicine_name },
+            select: { id: true, name: true }
+          });
+          if (medicine && medicine.name) {
+            return { ...item, medicine_id: medicine.id, medicine_name: medicine.name };
+          }
+        } catch (e) {
+          // ignore
+        }
+      }
+      
+      // If still Unknown, return item as is (will show Unknown in UI)
+      return item;
+    }));
+
+    prescription.items = enrichedItems;
+
     return prescription;
   }
 

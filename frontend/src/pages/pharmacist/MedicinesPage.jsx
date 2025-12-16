@@ -34,8 +34,14 @@ export default function MedicinesPage() {
     try {
       setLoading(true);
       const r = await getAllMedicines(params);
+      // Normalize array from various response shapes
       const arr = ensureArray(r);
-      setMeds(arr);
+      const unwrapped = arr && arr.length ? arr
+        : r?.data?.data?.medicines
+        || r?.data?.medicines
+        || r?.medicines
+        || [];
+      setMeds(unwrapped);
     } catch (e) {
       // ignore
     } finally {
@@ -83,7 +89,14 @@ export default function MedicinesPage() {
       // Reload medicines list
       await loadMedicines();
       
-      alert(`Import thành công: ${response.data.success.length} thuốc\nLỗi: ${response.data.errors.length} thuốc`);
+      const { success = [], errors: importErrors = [] } = response.data || {};
+      if (importErrors.length > 0) {
+        console.error('Import medicines errors:', importErrors);
+        const sampleErrors = importErrors.slice(0, 5).map((e, idx) => `${idx + 1}) ${e.error || JSON.stringify(e)}`).join('\n');
+        alert(`Import thành công: ${success.length} thuốc\nLỗi: ${importErrors.length} thuốc\nChi tiết:\n${sampleErrors}`);
+      } else {
+        alert(`Import thành công: ${success.length} thuốc`);
+      }
       
     } catch (error) {
       console.error('Import error:', error);

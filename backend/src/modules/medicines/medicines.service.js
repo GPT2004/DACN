@@ -436,9 +436,9 @@ class MedicineService {
         }
         
         if (!medicine) {
-          // Try to find by name
+          // Try to find by name (case-insensitive)
           medicine = await prisma.medicines.findFirst({
-            where: { name: medicineData.name }
+            where: { name: { equals: medicineData.name, mode: 'insensitive' } },
           });
         }
         
@@ -455,18 +455,43 @@ class MedicineService {
           });
         }
         
-        // Create stock entry
-        const stock = await prisma.stocks.create({
-          data: {
-            medicine_id: medicine.id,
-            batch_number: medicineData.batch_number,
-            expiry_date: new Date(medicineData.expiry_date),
-            quantity: medicineData.quantity,
-          },
-          include: {
-            medicine: true,
-          },
-        });
+        // Upsert stock by (medicine_id, batch_number) to avoid unique constraint errors
+        let stock;
+        try {
+          stock = await prisma.stocks.create({
+            data: {
+              medicine_id: medicine.id,
+              batch_number: medicineData.batch_number,
+              expiry_date: new Date(medicineData.expiry_date),
+              quantity: medicineData.quantity,
+            },
+            include: { medicine: true },
+          });
+        } catch (err) {
+          // If duplicate batch for same medicine, update quantity and expiry_date
+          const existing = await prisma.stocks.findFirst({
+            where: {
+              medicine_id: medicine.id,
+              batch_number: medicineData.batch_number,
+            },
+          });
+
+          if (!existing) throw err;
+
+          stock = await prisma.stocks.update({
+            where: { id: existing.id },
+            data: {
+              // accumulate quantity to preserve inventory
+              quantity: existing.quantity + medicineData.quantity,
+              // keep the later expiry_date for safety
+              expiry_date: new Date(medicineData.expiry_date) > existing.expiry_date
+                ? new Date(medicineData.expiry_date)
+                : existing.expiry_date,
+              batch_number: medicineData.batch_number,
+            },
+            include: { medicine: true },
+          });
+        }
         
         results.success.push({
           medicine: medicine,

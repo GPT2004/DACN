@@ -114,8 +114,45 @@ class InvoiceService {
       throw new Error('Prescription not found');
     }
 
+    // Enrich prescription items with actual medicine names and IDs from DB
+    const rawItems = typeof prescription.items === 'string' ? JSON.parse(prescription.items) : prescription.items || [];
+    const enrichedItems = await Promise.all(rawItems.map(async (item) => {
+      // Try to find medicine by ID first
+      if (item.medicine_id) {
+        try {
+          const medicine = await prisma.medicines.findUnique({
+            where: { id: parseInt(item.medicine_id) },
+            select: { id: true, name: true }
+          });
+          if (medicine && medicine.name) {
+            return { ...item, medicine_id: medicine.id, medicine_name: medicine.name };
+          }
+        } catch (e) {
+          // ignore and continue to next fallback
+        }
+      }
+      
+      // If ID didn't work, try to find by medicine_name
+      if (item.medicine_name && item.medicine_name !== 'Unknown') {
+        try {
+          const medicine = await prisma.medicines.findFirst({
+            where: { name: item.medicine_name },
+            select: { id: true, name: true }
+          });
+          if (medicine && medicine.name) {
+            return { ...item, medicine_id: medicine.id, medicine_name: medicine.name };
+          }
+        } catch (e) {
+          // ignore
+        }
+      }
+      
+      // Return item as is
+      return item;
+    }));
+
     // Derive invoice items from prescription items
-    const prescItems = typeof prescription.items === 'string' ? JSON.parse(prescription.items) : prescription.items;
+    const prescItems = enrichedItems;
 
     let subtotal = 0;
     const items = prescItems.map(item => {
@@ -123,9 +160,16 @@ class InvoiceService {
       const quantity = item.quantity || 1;
       const amount = unit_price * quantity;
       subtotal += amount;
+      
+      // If medicine_name is 'Unknown', replace with 'Phí thuốc'
+      let description = item.medicine_name;
+      if (!description || description === 'Unknown') {
+        description = 'Phí thuốc';
+      }
+      
       return {
         type: 'medicine',
-        description: item.medicine_name || item.description || 'Thuốc',
+        description: description,
         quantity: quantity,
         unit_price: unit_price,
         amount: amount,

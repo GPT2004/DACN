@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { X } from 'lucide-react';
-import { updateMedicine, createStock } from '../../services/medicineService';
+import { updateMedicine, createStock, updateStock } from '../../services/medicineService';
 
 export default function EditMedicineModal({ medicine, onClose, onSuccess }) {
   const [formData, setFormData] = useState({
@@ -25,11 +25,22 @@ export default function EditMedicineModal({ medicine, onClose, onSuccess }) {
         unit: medicine.unit || '',
         price: medicine.price || '',
       });
-      setStockData({
-        quantity: '',
-        batch_number: '',
-        expiry_date: '',
-      });
+      if (medicine.stocks && medicine.stocks.length > 0) {
+        const latestStock = medicine.stocks[0];
+        const expiryDate = latestStock.expiry_date ? new Date(latestStock.expiry_date).toISOString().split('T')[0] : '';
+        setStockData({
+          quantity: '',
+          batch_number: latestStock.batch_number || '',
+          expiry_date: expiryDate,
+          stock_id: latestStock.id,
+        });
+      } else {
+        setStockData({
+          quantity: '',
+          batch_number: '',
+          expiry_date: '',
+        });
+      }
     }
   }, [medicine]);
 
@@ -54,32 +65,35 @@ export default function EditMedicineModal({ medicine, onClose, onSuccess }) {
 
     try {
       setLoading(true);
-      // Update medicine
+      // Update medicine info
       await updateMedicine(medicine.id, formData);
 
-      // Add stock if fields are filled
-      if (stockData.quantity || stockData.batch_number || stockData.expiry_date) {
+      // Handle stock: create new if quantity provided, update existing if only changing details
+      if (stockData.quantity && String(stockData.quantity).trim() !== '') {
         const q = parseInt(String(stockData.quantity).replace(/[^0-9]/g, ''), 10);
         if (Number.isNaN(q) || q <= 0) {
           setError('Vui lòng nhập số lượng hợp lệ (> 0)');
           setLoading(false);
           return;
         }
-        if (!stockData.batch_number.trim()) {
-          setError('Vui lòng nhập lô hàng');
-          setLoading(false);
-          return;
-        }
-        if (!stockData.expiry_date) {
-          setError('Vui lòng chọn ngày hết hạn');
-          setLoading(false);
-          return;
+
+        let expiryDate = stockData.expiry_date;
+        if (!expiryDate) {
+          const oneYearLater = new Date();
+          oneYearLater.setFullYear(oneYearLater.getFullYear() + 1);
+          expiryDate = oneYearLater.toISOString().split('T')[0];
         }
 
         await createStock({
           medicine_id: medicine.id,
           quantity: q,
-          batch_number: stockData.batch_number.trim(),
+          batch_number: stockData.batch_number.trim() || 'N/A',
+          expiry_date: expiryDate,
+        });
+      } else if (stockData.stock_id && stockData.expiry_date) {
+        // Update existing stock when only changing expiry/batch details
+        await updateStock(stockData.stock_id, {
+          batch_number: stockData.batch_number.trim() || 'N/A',
           expiry_date: stockData.expiry_date,
         });
       }

@@ -4,6 +4,7 @@ import { useAuth } from '../../context/AuthContext';
 import { medicalRecordService } from '../../services/medicalRecordService';
 import { patientService } from '../../services/patientService';
 import { prescriptionService } from '../../services/prescriptionService';
+import PrescriptionForm from '../../components/doctor/PrescriptionForm';
 
 export default function MedicalRecordsPage() {
   const [records, setRecords] = useState([]);
@@ -13,6 +14,9 @@ export default function MedicalRecordsPage() {
   const searchTimer = useRef(null);
   const [showModal, setShowModal] = useState(false);
   const [showDetail, setShowDetail] = useState(false);
+  const [showPrescriptionModal, setShowPrescriptionModal] = useState(false);
+  const [existingPrescriptions, setExistingPrescriptions] = useState([]);
+  const [savingPrescription, setSavingPrescription] = useState(false);
   const [sending, setSending] = useState(false);
   const [redirectAfterCreate, setRedirectAfterCreate] = useState(false);
   const [editing, setEditing] = useState(null);
@@ -232,37 +236,9 @@ export default function MedicalRecordsPage() {
         setDetailRecord(record);
         setShowDetail(true);
 
-        // If the record does not include prescriptions, try fallback queries
-        try {
-          const hasPres = record.prescriptions && Array.isArray(record.prescriptions) && record.prescriptions.length > 0;
-          if (!hasPres) {
-            // Try fetching prescriptions by medical_record_id
-            const pRes = await prescriptionService.getPrescriptions({ medical_record_id: record.id });
-            const pPayload = pRes?.data?.data || pRes?.data || pRes;
-            let presList = [];
-            if (Array.isArray(pPayload)) presList = pPayload;
-            else if (Array.isArray(pPayload?.data)) presList = pPayload.data;
-            else if (Array.isArray(pPayload?.prescriptions)) presList = pPayload.prescriptions;
-
-            if (presList.length === 0 && record.patient_id) {
-              // As a last resort, fetch recent prescriptions for the patient
-              const pRes2 = await prescriptionService.getPrescriptions({ patient_id: record.patient_id, limit: 20 });
-              const pPayload2 = pRes2?.data?.data || pRes2?.data || pRes2;
-              if (Array.isArray(pPayload2)) presList = pPayload2;
-              else if (Array.isArray(pPayload2?.data)) presList = pPayload2.data;
-              else if (Array.isArray(pPayload2?.prescriptions)) presList = pPayload2.prescriptions;
-            }
-
-            if (presList && presList.length > 0) {
-              record = { ...record, prescriptions: presList };
-              setDetailRecord(record);
-            }
-          }
-        } catch (err) {
-          console.warn('Không thể tải đơn thuốc thay thế:', err);
-        }
-      } else {
-        alert('Không thể tải chi tiết');
+        // Prescriptions already included from backend - only medical_record linked ones
+        setDetailRecord(record);
+        setShowDetail(true);
       }
     } catch (err) {
       console.error('Load detail failed', err);
@@ -334,6 +310,83 @@ export default function MedicalRecordsPage() {
     } catch (err) {
       console.error('Lỗi chi tiết:', err);
       alert('Lưu thất bại: ' + (err?.response?.data?.message || err.message || 'Lỗi không xác định'));
+    }
+  };
+
+  const handleOpenPrescriptionModal = async () => {
+    if (!detailRecord) return;
+    try {
+      // Fetch all prescriptions of this patient to show as "reuse" options
+      const res = await medicalRecordService.getMedicalRecords({ 
+        patient_id: Number(detailRecord.patient_id),
+        limit: 100 
+      });
+      
+      let allPrescriptions = [];
+      if (res && res.data && res.data.records) {
+        // Collect prescriptions from all medical records
+        res.data.records.forEach(record => {
+          if (record.prescriptions && Array.isArray(record.prescriptions)) {
+            allPrescriptions = allPrescriptions.concat(record.prescriptions);
+          }
+        });
+      }
+      
+      setExistingPrescriptions(allPrescriptions || []);
+      setShowPrescriptionModal(true);
+    } catch (err) {
+      console.error('Error loading prescriptions:', err);
+      setExistingPrescriptions([]);
+      setShowPrescriptionModal(true);
+    }
+  };
+
+  const handleSavePrescription = async (data) => {
+    if (!detailRecord) return;
+    try {
+      setSavingPrescription(true);
+      const patientId = detailRecord.patient_id;
+      
+      const items = data.medicines.map(m => ({
+        medicine_id: m.medicine_id || undefined,
+        medicine_name: m.name,
+        quantity: Number(m.quantity) || 1,
+        unit_price: m.unit_price || 0,
+        instructions: m.instructions || '',
+        dosage: m.dosage || ''
+      }));
+
+      const payload = {
+        patient_id: Number(patientId),
+        medical_record_id: Number(detailRecord.id),
+        items,
+      };
+
+      const res = await prescriptionService.createPrescription(payload);
+      const prescriptionData = res?.data?.data || res?.data || res;
+
+      // Immediately notify reception so they can create an invoice
+      try {
+        await prescriptionService.notifyReception(prescriptionData.id);
+      } catch (notifyErr) {
+        console.error('Notify reception failed', notifyErr);
+      }
+      
+      alert('✅ Lưu đơn thuốc thành công');
+      setShowPrescriptionModal(false);
+      
+      // Reload detail to show new prescription
+      if (detailRecord?.id) {
+        const detailRes = await medicalRecordService.getMedicalRecordById(detailRecord.id);
+        const detail = detailRes?.data?.data || detailRes?.data || detailRes;
+        if (detail && detail.id) {
+          setDetailRecord(detail);
+        }
+      }
+    } catch (err) {
+      alert('Lỗi lưu đơn thuốc: ' + (err?.response?.data?.message || err.message || ''));
+    } finally {
+      setSavingPrescription(false);
     }
   };
 
@@ -495,13 +548,7 @@ export default function MedicalRecordsPage() {
               </div>
               <div className="flex items-center gap-2">
                 <button
-                  onClick={() => {
-                    // navigate to prescription page with medical_record_id and patientId
-                    const pid = detailRecord.patient_id || detailRecord.patient?.id || detailRecord.patient?.user?.id;
-                    setShowDetail(false);
-                    setDetailRecord(null);
-                    navigate(`/doctor/prescription?medical_record_id=${detailRecord.id}${pid ? `&patientId=${pid}` : ''}`);
-                  }}
+                  onClick={handleOpenPrescriptionModal}
                   className="px-3 py-1 bg-emerald-600 text-white rounded hover:bg-emerald-700"
                 >
                   Kê thuốc
@@ -626,6 +673,31 @@ export default function MedicalRecordsPage() {
           </div>
         </div>
       }
+
+      {/* Prescription Modal */}
+      {showPrescriptionModal && detailRecord && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50 overflow-auto">
+          <div className="bg-white rounded-lg shadow-lg max-w-2xl w-full my-8">
+            <div className="flex justify-between items-center p-6 border-b">
+              <h2 className="text-xl font-bold">Kê đơn thuốc</h2>
+              <button
+                onClick={() => setShowPrescriptionModal(false)}
+                className="text-gray-500 hover:text-gray-700 text-2xl"
+              >
+                ×
+              </button>
+            </div>
+            <div className="p-6 max-h-[70vh] overflow-auto">
+              <PrescriptionForm 
+                patient={{ name: `Bệnh nhân: ${detailRecord.patient?.user?.full_name || detailRecord.patient?.full_name || 'ID: ' + detailRecord.patient_id}` }}
+                onSave={handleSavePrescription}
+                onCancel={() => setShowPrescriptionModal(false)}
+                initialPrescriptions={existingPrescriptions}
+              />
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

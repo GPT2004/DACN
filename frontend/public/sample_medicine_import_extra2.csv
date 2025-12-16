@@ -1,0 +1,6 @@
+name,code,description,unit,price,batch_number,expiry_date,quantity
+Clopidogrel 75mg,CLO75,Antiplatelet agent,tablet,3600,BATCH-CLO-001,2027-04-10,180
+Pantoprazole 40mg,PAN40,Proton pump inhibitor,tablet,3000,BATCH-PAN-001,2027-05-15,220
+Levocetirizine 5mg,LEV5,Second-gen antihistamine,tablet,1900,BATCH-LEV-001,2027-03-05,240
+Dexamethasone 0.5mg,DEX05,Corticosteroid,tablet,2100,BATCH-DEX-001,2027-02-25,160
+Diclofenac 50mg,DIC50,NSAID analgesic,tablet,2500,BATCH-DIC-001,2027-01-30,200

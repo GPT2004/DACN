@@ -121,9 +121,9 @@ export default function MedicalRecordsPage() {
     try {
       setLoading(true);
       const res = await medicalRecordService.getMedicalRecordById(rec.id);
-      if (res && res.success && res.data) {
+      const detail = res?.data?.data || res?.data || res;
+      if (detail && detail.id) {
         // preserve shared metadata from list result so modal can show it
-        const detail = res.data;
         if (rec.shared) {
           detail.shared = true;
           detail.shared_at = rec.shared_at || null;
@@ -191,6 +191,7 @@ export default function MedicalRecordsPage() {
                     <th className="px-4 py-3 text-left text-sm font-medium text-gray-600">Bác sĩ</th>
                     <th className="px-4 py-3 text-left text-sm font-medium text-gray-600">Ngày khám</th>
                     <th className="px-4 py-3 text-left text-sm font-medium text-gray-600">Chẩn đoán</th>
+                    <th className="px-4 py-3 text-left text-sm font-medium text-gray-600">Hồ sơ dùng</th>
                     <th className="px-4 py-3 text-left text-sm font-medium text-gray-600">Ghi chú</th>
                     <th className="px-4 py-3 text-right text-sm font-medium text-gray-600">Hành động</th>
                   </tr>
@@ -203,6 +204,8 @@ export default function MedicalRecordsPage() {
                     const dateVal = rec.appointment?.appointment_date || rec.created_at || rec.date || null;
                     const diagVal = rec.diagnosis || '';
                     const notesVal = rec.notes || '';
+                    const profileName = rec.patient?.user?.full_name || rec.patient?.full_name || '';
+                    const profilePhone = rec.patient?.user?.phone || rec.patient?.phone || '';
                     return (
                       <tr key={rec.id} className="border-t hover:bg-gray-50">
                         <td className="px-4 py-3 text-sm">
@@ -215,6 +218,10 @@ export default function MedicalRecordsPage() {
                         </td>
                         <td className="px-4 py-3 text-sm">{dateVal ? new Date(dateVal).toLocaleDateString('vi-VN') : '—'}</td>
                         <td className="px-4 py-3 text-sm">{renderHighlighted(diagVal, query)}</td>
+                        <td className="px-4 py-3 text-sm">
+                          {profileName || '—'}
+                          {profilePhone ? <div className="text-xs text-gray-500">{profilePhone}</div> : null}
+                        </td>
                         <td className="px-4 py-3 text-sm truncate max-w-xs">{renderHighlighted(notesVal, query)}</td>
                         <td className="px-4 py-3 text-sm text-right">
                           <button onClick={() => openDetail(rec)} className="text-blue-600 mr-3">Xem</button>

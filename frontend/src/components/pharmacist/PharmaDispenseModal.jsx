@@ -34,10 +34,17 @@ export default function PharmaDispenseModal({ prescriptionId, onClose, onDispens
           try {
             const res = await medicineService.getStockByMedicineId(medId);
             const data = res?.data || res;
-            // endpoint returns { total_quantity: number }
-            stockQty = data?.total_quantity ?? null;
+            // endpoint returns { total_stock: number } or { data: { total_stock } }
+            if (data?.data?.total_stock !== undefined) {
+              stockQty = data.data.total_stock;
+            } else if (data?.total_stock !== undefined) {
+              stockQty = data.total_stock;
+            } else {
+              stockQty = 0;
+            }
           } catch (e) {
             console.error('Failed to get stock for medicine', medId, e);
+            stockQty = 0;
           }
         }
 
@@ -152,7 +159,9 @@ export default function PharmaDispenseModal({ prescriptionId, onClose, onDispens
                         <td className="py-1">{it.name}</td>
                         <td className="py-1">{it.prescribed_qty}</td>
                         <td className="py-1"><input type="number" value={it.dispense_qty} min={0} max={it.prescribed_qty} onChange={e => updateQty(i, e.target.value)} className="w-20 px-2 py-1 border rounded" /></td>
-                        <td className="py-1">{it.stock_qty === null ? '–' : it.stock_qty}</td>
+                        <td className="py-1">
+                          {it.stock_qty !== null && it.stock_qty !== undefined ? it.stock_qty : '–'}
+                        </td>
                       </tr>
                     ))}
                   </tbody>

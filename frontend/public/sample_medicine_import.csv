@@ -1,0 +1,11 @@
+name,code,description,unit,price,batch_number,expiry_date,quantity
+Paracetamol 500mg,PCM500,Analgesic/antipyretic,tablet,1500,BATCH-PCM-001,2026-12-31,500
+Amoxicillin 500mg,AMX500,Broad-spectrum antibiotic,capsule,2500,BATCH-AMX-001,2026-11-30,300
+Ibuprofen 400mg,IBU400,NSAID for pain/fever,tablet,1800,BATCH-IBU-001,2026-10-15,400
+Cefuroxime 250mg,CFX250,Cephalosporin antibiotic,tablet,3200,BATCH-CFX-001,2026-09-30,200
+Azithromycin 250mg,AZM250,Macrolide antibiotic,tablet,2900,BATCH-AZM-001,2026-08-31,180
+Metronidazole 250mg,MNZ250,Antiprotozoal/antibacterial,tablet,1700,BATCH-MNZ-001,2026-07-31,250
+Cetirizine 10mg,CTZ10,Antihistamine for allergy,tablet,900,BATCH-CTZ-001,2026-12-15,350
+Omeprazole 20mg,OMP20,Proton pump inhibitor,capsule,2000,BATCH-OMP-001,2026-11-15,220
+ORS packet,ORS01,Oral rehydration salts,packet,500,BATCH-ORS-001,2026-10-31,600
+Vitamin C 500mg,VITC500,Supplement,tablet,700,BATCH-VITC-001,2026-12-20,450

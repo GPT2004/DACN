@@ -216,11 +216,26 @@ class PatientsService {
       const { page, limit } = pagination;
       const skip = (page - 1) * limit;
 
-      // Include records owned by this patient row OR records shared to this patient via shared_medical_records
+      // 1) Lấy user_id của patient gốc để gom tất cả patient rows thuộc cùng user (user_id hoặc owner_user_id)
+      const patientRow = await prisma.patients.findUnique({ where: { id: patientId }, select: { user_id: true } });
+      const linkedUserId = patientRow?.user_id || null;
+
+      let patientIds = [patientId];
+      if (linkedUserId) {
+        const siblings = await prisma.patients.findMany({
+          where: { OR: [{ user_id: linkedUserId }, { owner_user_id: linkedUserId }] },
+          select: { id: true },
+        });
+        if (siblings && siblings.length > 0) {
+          patientIds = Array.from(new Set([...patientIds, ...siblings.map((p) => p.id)]));
+        }
+      }
+
+      // 2) Lấy các medical_record_id được share tới bất kỳ patientId ở trên
       let sharedIds = [];
       try {
         const rows = await prisma.$queryRaw`
-          SELECT medical_record_id FROM shared_medical_records WHERE recipient_patient_id = ${patientId}
+          SELECT medical_record_id FROM shared_medical_records WHERE recipient_patient_id = ANY(${patientIds})
         `;
         if (Array.isArray(rows) && rows.length > 0) {
           sharedIds = rows.map((r) => r.medical_record_id).filter(Boolean);
@@ -230,8 +245,8 @@ class PatientsService {
       }
 
       const where = sharedIds.length > 0
-        ? { OR: [{ patient_id: patientId }, { id: { in: sharedIds } }] }
-        : { patient_id: patientId };
+        ? { OR: [ { patient_id: { in: patientIds } }, { id: { in: sharedIds } } ] }
+        : { patient_id: { in: patientIds } };
 
       const [total, records] = await Promise.all([
         prisma.medical_records.count({ where }),
@@ -249,6 +264,16 @@ class PatientsService {
                 }
               }
             },
+            patient: {
+              include: {
+                user: {
+                  select: {
+                    full_name: true,
+                    phone: true
+                  }
+                }
+              }
+            },
             appointment: {
               select: {
                 appointment_date: true,
@@ -262,14 +287,14 @@ class PatientsService {
         })
       ]);
 
-      // Fetch shared metadata for records that were shared to this patient
+      // 3) shared metadata
       let sharedMeta = {};
       if (sharedIds.length > 0) {
         try {
           const srows = await prisma.$queryRaw`
             SELECT medical_record_id, shared_by_user_id, created_at
             FROM shared_medical_records
-            WHERE recipient_patient_id = ${patientId} AND medical_record_id = ANY(${sharedIds})
+            WHERE recipient_patient_id = ANY(${patientIds}) AND medical_record_id = ANY(${sharedIds})
           `;
           if (Array.isArray(srows)) {
             for (const r of srows) {
@@ -286,7 +311,6 @@ class PatientsService {
         }
       }
 
-      // Annotate records with shared info for frontend to render badge or details
       const annotated = (records || []).map((rec) => {
         const copy = Object.assign({}, rec);
         if (sharedIds.includes(rec.id)) {

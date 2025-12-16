@@ -200,7 +200,7 @@ class MedicalRecordService {
     if (patient_id) where.patient_id = parseInt(patient_id);
     if (doctor_id) where.doctor_id = parseInt(doctor_id);
 
-    const [records, total] = await Promise.all([
+    const [recordsRaw, total] = await Promise.all([
       prisma.medical_records.findMany({
         where,
         skip,
@@ -273,6 +273,41 @@ class MedicalRecordService {
       }),
       prisma.medical_records.count({ where }),
     ]);
+
+    // Enrich prescription items with medicine id and name to avoid "Unknown" in reuse list
+    const records = await Promise.all((recordsRaw || []).map(async (rec) => {
+      if (!rec.prescriptions || rec.prescriptions.length === 0) return rec;
+
+      const prescriptions = await Promise.all(rec.prescriptions.map(async (p) => {
+        const rawItems = typeof p.items === 'string' ? JSON.parse(p.items) : (p.items || []);
+        const enrichedItems = await Promise.all(rawItems.map(async (item) => {
+          // Try by ID first
+          if (item.medicine_id) {
+            try {
+              const med = await prisma.medicines.findUnique({
+                where: { id: parseInt(item.medicine_id) },
+                select: { id: true, name: true },
+              });
+              if (med && med.name) return { ...item, medicine_id: med.id, medicine_name: med.name };
+            } catch (_) {}
+          }
+          // Fallback by name
+          if (item.medicine_name && item.medicine_name !== 'Unknown') {
+            try {
+              const med = await prisma.medicines.findFirst({
+                where: { name: item.medicine_name },
+                select: { id: true, name: true },
+              });
+              if (med && med.name) return { ...item, medicine_id: med.id, medicine_name: med.name };
+            } catch (_) {}
+          }
+          return item;
+        }));
+        return { ...p, items: enrichedItems };
+      }));
+
+      return { ...rec, prescriptions };
+    }));
 
     return {
       records,
@@ -348,6 +383,9 @@ class MedicalRecordService {
           },
         },
         prescriptions: {
+          where: {
+            medical_record_id: parseInt(id),
+          },
           select: {
             id: true,
             status: true,
@@ -392,6 +430,35 @@ class MedicalRecordService {
         throw new Error('Unauthorized access');
       }
     }
+
+    // Fetch ALL prescriptions for this patient (not just ones linked to this medical_record)
+    // so patient can see all prescriptions created for them
+    const allPrescriptions = await prisma.prescriptions.findMany({
+      where: { patient_id: record.patient_id },
+      select: {
+        id: true,
+        status: true,
+        total_amount: true,
+        items: true,
+        created_at: true,
+        medical_record_id: true,
+        doctor: {
+          include: {
+            user: {
+              select: {
+                id: true,
+                full_name: true,
+              },
+            },
+          },
+        },
+      },
+      orderBy: { created_at: 'desc' },
+    });
+
+    // Replace the prescriptions from the relation (only those with medical_record_id = this record.id)
+    // with ALL prescriptions for this patient
+    record.prescriptions = allPrescriptions;
 
     return record;
   }

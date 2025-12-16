@@ -1,0 +1,6 @@
+name,code,description,unit,price,batch_number,expiry_date,quantity
+Losartan 50mg,LOS50,Angiotensin II receptor blocker,tablet,3200,BATCH-LOS-001,2027-01-15,200
+Amlodipine 5mg,AML5,Calcium channel blocker,tablet,2800,BATCH-AML-001,2027-02-10,250
+Simvastatin 20mg,SIM20,Statin for cholesterol,tablet,3500,BATCH-SIM-001,2026-12-05,180
+Metformin 500mg,MET500,Antidiabetic biguanide,tablet,1500,BATCH-MET-001,2027-03-20,400
+Salbutamol 2mg,SAL2,Bronchodilator syrup,syrup,2200,BATCH-SAL-001,2026-11-18,150

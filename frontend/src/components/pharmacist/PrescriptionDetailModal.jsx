@@ -132,14 +132,39 @@ export default function PrescriptionDetailModal({ prescriptionId, onClose, onDis
                       </tr>
                     </thead>
                     <tbody className="divide-y divide-gray-200">
-                      {(Array.isArray(invoice.items) ? invoice.items : []).map((item, i) => (
-                        <tr key={i}>
-                          <td className="px-4 py-2">{item.description || item.medicine_name || 'N/A'}</td>
-                          <td className="px-4 py-2">{item.quantity}</td>
-                          <td className="px-4 py-2">{item.unit_price?.toLocaleString() || 0} VND</td>
-                          <td className="px-4 py-2 font-medium">{item.amount?.toLocaleString() || 0} VND</td>
+                      {/* Show consultation fee if exists */}
+                      {invoice.items && invoice.items.length > 0 && invoice.items[0].type === 'consultation' && (
+                        <tr>
+                          <td className="px-4 py-2">{invoice.items[0].description}</td>
+                          <td className="px-4 py-2">{invoice.items[0].quantity}</td>
+                          <td className="px-4 py-2">{invoice.items[0].unit_price?.toLocaleString() || 0} VND</td>
+                          <td className="px-4 py-2 font-medium">{invoice.items[0].amount?.toLocaleString() || 0} VND</td>
                         </tr>
-                      ))}
+                      )}
+                      
+                      {/* Show prescription items (medicines) */}
+                      {prescription && (typeof prescription.items === 'string' 
+                        ? JSON.parse(prescription.items) 
+                        : prescription.items || []
+                      ).map((item, i) => {
+                        const quantity = Number(item.quantity) || 0;
+                        const unitPrice = Number(item.unit_price) || 0;
+                        const amount = quantity * unitPrice;
+                        
+                        // If medicine_name is Unknown, show as "Phí thuốc"
+                        const displayName = (item.medicine_name === 'Unknown' || !item.medicine_name) 
+                          ? 'Phí thuốc' 
+                          : item.medicine_name;
+                        
+                        return (
+                          <tr key={i}>
+                            <td className="px-4 py-2">{displayName}</td>
+                            <td className="px-4 py-2">{quantity}</td>
+                            <td className="px-4 py-2">{unitPrice.toLocaleString()} VND</td>
+                            <td className="px-4 py-2 font-medium">{amount.toLocaleString()} VND</td>
+                          </tr>
+                        );
+                      })}
                     </tbody>
                   </table>
                 </div>
