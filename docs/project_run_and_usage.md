@@ -25,7 +25,8 @@
 ### AI Services
 1. `cd ai`
 2. (Optional) create venv: `python -m venv .venv && .venv\Scripts\activate`
-3. `pip install -r requirements.txt`
+3. `pip install -r requirements.txt` (file nằm tại `ai/requirements.txt`)
+   - Thư viện chính: `flask`, `flask-cors`, `scikit-learn`, `xgboost`, `pandas`, `joblib`, `numpy`.
 4. Run services:
    - `python api/app_symptom_form.py` (port 5001)
    - `python api/app_combined_form.py` (port 5000) (or cardio/diabetes variants)
