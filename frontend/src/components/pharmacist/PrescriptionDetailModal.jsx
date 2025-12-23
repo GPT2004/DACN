@@ -1,5 +1,7 @@
+/* eslint-disable no-console */
+/* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from 'react';
-import { X, Eye } from 'lucide-react';
+import { X, Eye, Download } from 'lucide-react';
 import { prescriptionService } from '../../services/prescriptionService';
 import { invoiceService } from '../../services/invoiceService';
 import PharmaDispenseModal from './PharmaDispenseModal';
@@ -9,6 +11,7 @@ export default function PrescriptionDetailModal({ prescriptionId, onClose, onDis
   const [invoice, setInvoice] = useState(null);
   const [loading, setLoading] = useState(false);
   const [showDispenseModal, setShowDispenseModal] = useState(false);
+  const [printing, setPrinting] = useState(false);
 
   useEffect(() => {
     if (!prescriptionId) return;
@@ -52,6 +55,12 @@ export default function PrescriptionDetailModal({ prescriptionId, onClose, onDis
 
   const handleDispense = () => {
     setShowDispenseModal(true);
+  };
+
+  const handlePrint = () => {
+    setPrinting(true);
+    window.print();
+    setTimeout(() => setPrinting(false), 1000);
   };
 
   if (loading) {
@@ -210,6 +219,14 @@ export default function PrescriptionDetailModal({ prescriptionId, onClose, onDis
                 className="flex-1 px-4 py-2 bg-gray-200 text-gray-800 rounded-lg hover:bg-gray-300 font-medium"
               >
                 Đóng
+              </button>
+              <button
+                onClick={handlePrint}
+                disabled={printing}
+                className="flex items-center justify-center gap-2 flex-1 px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 disabled:opacity-50 font-medium"
+              >
+                <Download className="w-4 h-4" />
+                {printing ? 'Đang in...' : 'In đơn'}
               </button>
               {prescription && prescription.status !== 'DISPENSED' && (
                 <button

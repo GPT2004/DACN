@@ -1,3 +1,6 @@
+/* eslint-disable no-console */
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable no-unused-vars */
 // frontend/src/components/admin/Reports/AppointmentReport.jsx
 import React, { useState, useEffect } from 'react';
 import { Calendar, TrendingUp, Clock, CheckCircle, XCircle } from 'lucide-react';

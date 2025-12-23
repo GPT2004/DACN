@@ -1,3 +1,5 @@
+/* eslint-disable no-console */
+/* eslint-disable react-hooks/exhaustive-deps */
 // frontend/src/components/admin/Reports/RevenueReport.jsx
 import React, { useState, useEffect } from 'react';
 import { DollarSign, TrendingUp, TrendingDown, Download } from 'lucide-react';

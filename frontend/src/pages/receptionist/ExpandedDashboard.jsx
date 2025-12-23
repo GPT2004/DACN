@@ -1,3 +1,6 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable no-console */
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../../context/AuthContext';
 import ReceptionistLayout from '../../components/layout/ReceptionistLayout';

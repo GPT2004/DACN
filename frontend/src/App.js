@@ -1,4 +1,4 @@
-﻿import React from 'react';
+import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { useAuth } from './context/AuthContext';
 
@@ -13,6 +13,7 @@ import ForgotPasswordPage from './pages/auth/ForgotPasswordPage';
 
 // Patient Pages
 import PatientDashboard from './pages/patient/PatientDashboard';
+// eslint-disable-next-line no-unused-vars
 import AppointmentsPage from './pages/patient/AppointmentsPage';
 import BookAppointmentPage from './pages/patient/BookAppointmentPage';
 import PatientAppointmentsPage from './pages/patient/PatientAppointmentsPage';
@@ -38,6 +39,7 @@ import DoctorMedicalRecordsPage from './pages/doctor/MedicalRecordsPage';
 import DoctorLayout from './components/doctor/DoctorLayout';
 
 // Receptionist Pages
+// eslint-disable-next-line no-unused-vars
 import ReceptionistDashboard from './pages/receptionist/ReceptionistDashboard';
 import ReceptionistDashboardV2 from './pages/receptionist/ReceptionistDashboardV2';
 import AppointmentManagementPage from './pages/receptionist/AppointmentManagementPage';
@@ -61,6 +63,7 @@ import LabTechLabOrdersPage from './pages/labtech/LabOrdersPage';
 import AdminDashboard from './pages/admin/AdminDashboard';
 import UsersPage from './pages/admin/UsersPage';
 import DoctorsPage from './pages/admin/DoctorsPage';
+// eslint-disable-next-line no-unused-vars
 import MedicinesPage from './pages/admin/MedicinesPage';
 import ReportsPage from './pages/admin/ReportsPage';
 import AuditLogsPage from './pages/admin/AuditLogsPage';

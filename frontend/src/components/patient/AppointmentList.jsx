@@ -1,4 +1,5 @@
-﻿// frontend/src/components/patient/AppointmentList.jsx
+﻿/* eslint-disable no-unused-vars */
+// frontend/src/components/patient/AppointmentList.jsx
 import React from 'react';
 import { Calendar, Clock, User, MapPin, Phone, Mail, CheckCircle, XCircle, AlertCircle } from 'lucide-react';
 import { formatDate, formatTime } from '../../utils/helpers';

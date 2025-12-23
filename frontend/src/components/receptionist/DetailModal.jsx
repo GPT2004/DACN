@@ -1,11 +1,19 @@
-import React from 'react';
-import { X, Phone, Mail, MapPin, Calendar, User, Stethoscope, DollarSign, FileText } from 'lucide-react';
+/* eslint-disable no-unused-vars */
+import React, { useState } from 'react';
+import { X, Phone, Mail, MapPin, Calendar, User, Stethoscope, DollarSign, FileText, Download } from 'lucide-react';
 
 /**
  * DetailModal - Hiển thị chi tiết các entity (Appointment, Patient, Invoice, Doctor)
  */
 export default function DetailModal({ item, itemType, onClose, onAction }) {
+  const [printing, setPrinting] = useState(false);
   if (!item) return null;
+
+  const handlePrint = () => {
+    setPrinting(true);
+    window.print();
+    setTimeout(() => setPrinting(false), 1000);
+  };
 
   const renderAppointmentDetails = () => (
     <div className="space-y-4">
@@ -224,7 +232,12 @@ export default function DetailModal({ item, itemType, onClose, onAction }) {
             }
 
             const totalAmount = Number(item?.total_amount ?? item?.total ?? (medicinesSubtotal + consultFee) ?? 0);
-            const paid = Number(item?.paid_amount || 0);
+            const paid = Number(
+              item?.paid_amount ??
+              (item?.status === 'PAID'
+                ? (item?.total ?? item?.total_amount ?? item?.subtotal ?? (medicinesSubtotal + consultFee) ?? 0)
+                : 0)
+            );
             const owed = Math.max(0, totalAmount - paid);
 
             return (
@@ -240,16 +253,21 @@ export default function DetailModal({ item, itemType, onClose, onAction }) {
         </div>
       </div>
 
-      {item.status === 'UNPAID' && (
-        <div className="flex gap-3 pt-4 border-t">
+      <div className="flex gap-3 pt-4 border-t">
+        {item.status === 'UNPAID' && (
           <button onClick={() => onAction('payment', item)} className="flex-1 bg-green-600 text-white py-2 px-4 rounded-lg hover:bg-green-700 text-sm font-medium">
             Xử lý thanh toán
           </button>
-          <button onClick={() => onAction('print', item)} className="flex-1 bg-gray-600 text-white py-2 px-4 rounded-lg hover:bg-gray-700 text-sm font-medium">
-            In hóa đơn
-          </button>
-        </div>
-      )}
+        )}
+        <button
+          onClick={handlePrint}
+          disabled={printing}
+          className="flex items-center justify-center gap-2 flex-1 bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 disabled:opacity-50 text-sm font-medium"
+        >
+          <Download className="w-4 h-4" />
+          {printing ? 'Đang in...' : 'In hóa đơn'}
+        </button>
+      </div>
     </div>
   );
 

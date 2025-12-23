@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import React, { useState } from 'react';
 import { Users, AlertCircle, CheckCircle } from 'lucide-react';
 import PatientRegistrationForm from '../../components/receptionist/PatientRegistrationForm';

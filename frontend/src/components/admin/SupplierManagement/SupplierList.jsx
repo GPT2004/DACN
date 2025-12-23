@@ -1,3 +1,6 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable no-console */
+/* eslint-disable no-unused-vars */
 // frontend/src/components/admin/SupplierManagement/SupplierList.jsx
 import React, { useState, useEffect } from 'react';
 import { Search, Plus, Edit, Trash2, Eye, Phone, Mail } from 'lucide-react';

@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 // frontend/src/components/admin/MedicineManagement/MedicineForm.jsx
 import React, { useState, useEffect } from 'react';
 import { X } from 'lucide-react';

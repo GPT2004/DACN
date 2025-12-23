@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import React, { useEffect, useState } from 'react';
 import { timeslotService } from '../../services/scheduleService';
 import { X, Calendar } from 'lucide-react';

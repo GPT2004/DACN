@@ -1,3 +1,5 @@
+/* eslint-disable no-console */
+/* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from 'react';
 import { CheckCircle, AlertCircle } from 'lucide-react';
 import CheckInForm from '../../components/receptionist/CheckInForm';

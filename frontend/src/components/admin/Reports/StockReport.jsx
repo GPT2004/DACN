@@ -1,3 +1,5 @@
+/* eslint-disable no-console */
+/* eslint-disable no-unused-vars */
 // frontend/src/components/admin/Reports/StockReport.jsx
 import React, { useState, useEffect } from 'react';
 import { Package, AlertTriangle, TrendingDown, Calendar } from 'lucide-react';

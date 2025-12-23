@@ -1,4 +1,5 @@
-﻿// src/components/receptionist/TimeSlotManager.jsx
+﻿/* eslint-disable no-unused-vars */
+// src/components/receptionist/TimeSlotManager.jsx
 import React, { useState } from 'react';
 import { Clock, Users, Plus } from 'lucide-react';
 import { mockTimeSlots } from './mockData';

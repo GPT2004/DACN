@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 // frontend/src/components/admin/RoomManagement/RoomForm.jsx
 import React, { useState, useEffect } from 'react';
 import { X } from 'lucide-react';

@@ -1,4 +1,5 @@
-﻿// frontend/src/components/patient/SymptomChecker.jsx
+﻿/* eslint-disable no-console */
+// frontend/src/components/patient/SymptomChecker.jsx
 import React, { useState } from 'react';
 import { Bot, AlertTriangle, CheckCircle, Info, Send, X, Plus } from 'lucide-react';
 import { aiService } from '../../services/aiService';

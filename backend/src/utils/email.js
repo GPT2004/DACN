@@ -14,6 +14,41 @@ class EmailService {
     });
   }
 
+  // Normalize different time shapes (Date, string, {hours,minutes}) to HH:mm
+  formatTime(t) {
+    try {
+      if (!t) return '';
+      if (t instanceof Date) {
+        const iso = t.toISOString();
+        return `${iso.substring(11, 13)}:${iso.substring(14, 16)}`;
+      }
+      if (typeof t === 'number') {
+        const ms = t < 1e12 ? t * 1000 : t; // handle seconds vs milliseconds
+        const d = new Date(ms);
+        if (!isNaN(d.getTime())) {
+          const iso = d.toISOString();
+          return `${iso.substring(11, 13)}:${iso.substring(14, 16)}`;
+        }
+      }
+      if (typeof t === 'string') {
+        const m = t.match(/^(\d{1,2}):(\d{2})(?::\d{2})?$/);
+        if (m) return `${m[1].padStart(2, '0')}:${m[2]}`;
+        const d = new Date(t);
+        if (!isNaN(d.getTime())) {
+          const iso = d.toISOString();
+          return `${iso.substring(11, 13)}:${iso.substring(14, 16)}`;
+        }
+        return t;
+      }
+      if (typeof t === 'object' && t.hours !== undefined && t.minutes !== undefined) {
+        return `${String(t.hours).padStart(2, '0')}:${String(t.minutes).padStart(2, '0')}`;
+      }
+      return String(t);
+    } catch (e) {
+      try { return String(t); } catch { return ''; }
+    }
+  }
+
   async sendEmail({ to, subject, html, attachments = [] }) {
     try {
       const info = await this.transporter.sendMail({
@@ -42,7 +77,7 @@ class EmailService {
       <ul>
         <li><strong>Bác sĩ:</strong> ${appointment.doctor.user.full_name}</li>
         <li><strong>Ngày khám:</strong> ${new Date(appointment.appointment_date).toLocaleDateString('vi-VN')}</li>
-        <li><strong>Giờ khám:</strong> ${appointment.appointment_time}</li>
+        <li><strong>Giờ khám:</strong> ${this.formatTime(appointment.appointment_time)}</li>
         <li><strong>Lý do khám:</strong> ${appointment.reason || 'Không có'}</li>
       </ul>
       ${!isConfirmed ? `
@@ -71,7 +106,7 @@ class EmailService {
       <ul>
         <li><strong>Bác sĩ:</strong> ${appointment.doctor.user.full_name}</li>
         <li><strong>Ngày khám:</strong> ${new Date(appointment.appointment_date).toLocaleDateString('vi-VN')}</li>
-        <li><strong>Giờ khám:</strong> ${appointment.appointment_time}</li>
+        <li><strong>Giờ khám:</strong> ${this.formatTime(appointment.appointment_time)}</li>
       </ul>
       <p>Vui lòng đặt lại lịch nếu cần. Lưu ý: vui lòng đến sớm trước 15 phút để tránh huỷ lịch tự động.</p>
       <p>Trân trọng,<br>Phòng khám</p>
@@ -92,7 +127,7 @@ class EmailService {
       <ul>
         <li><strong>Bác sĩ:</strong> ${appointment.doctor.user.full_name}</li>
         <li><strong>Ngày khám:</strong> ${new Date(appointment.appointment_date).toLocaleDateString('vi-VN')}</li>
-        <li><strong>Giờ khám:</strong> ${appointment.appointment_time}</li>
+        <li><strong>Giờ khám:</strong> ${this.formatTime(appointment.appointment_time)}</li>
       </ul>
       <p>Vui lòng đến đúng giờ. Xin cảm ơn!</p>
       <p>Trân trọng,<br>Phòng khám</p>

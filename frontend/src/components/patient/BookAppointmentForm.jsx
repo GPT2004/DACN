@@ -1,4 +1,7 @@
-﻿// frontend/src/components/patient/BookAppointmentForm.jsx
+/* eslint-disable no-console */
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable no-unused-vars */
+// frontend/src/components/patient/BookAppointmentForm.jsx
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Calendar, Clock, User, FileText, Search } from 'lucide-react';

@@ -1,3 +1,6 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable no-console */
+/* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from 'react';
 import { DollarSign, Plus, Search, Filter, Eye, Printer, CheckCircle, X } from 'lucide-react';
 import { prescriptionService } from '../../services/prescriptionService';

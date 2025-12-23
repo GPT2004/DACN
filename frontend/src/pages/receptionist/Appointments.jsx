@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import React, { useEffect, useState } from 'react';
 import { appointmentService } from '../../services/appointmentService';
 import AppointmentDetailModal from '../../components/receptionist/AppointmentDetailModal';

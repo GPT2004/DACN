@@ -1,4 +1,5 @@
-﻿// src/components/receptionist/RoomManager.jsx
+﻿/* eslint-disable no-unused-vars */
+// src/components/receptionist/RoomManager.jsx
 import React from 'react';
 import { DoorOpen, Users, Clock } from 'lucide-react';
 import { mockRooms } from './mockData';

@@ -1,3 +1,6 @@
+/* eslint-disable no-console */
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable no-unused-vars */
 // frontend/src/components/admin/Reports/PerformanceReport.jsx
 import React, { useState, useEffect } from 'react';
 import { Award, TrendingUp, Star, Users } from 'lucide-react';

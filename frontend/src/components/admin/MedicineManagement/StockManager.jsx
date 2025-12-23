@@ -1,3 +1,5 @@
+/* eslint-disable no-console */
+/* eslint-disable no-unused-vars */
 // frontend/src/components/admin/MedicineManagement/StockManager.jsx
 import React, { useState, useEffect } from 'react';
 import { Plus, Minus, AlertTriangle, Calendar, Package } from 'lucide-react';

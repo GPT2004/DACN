@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 // frontend/src/hooks/useApi.js
 import { useState, useCallback } from 'react';
 

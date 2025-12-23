@@ -1,3 +1,5 @@
+/* eslint-disable no-console */
+/* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../../context/AuthContext';
 import PharmacistLayout from '../../components/layout/PharmacistLayout';

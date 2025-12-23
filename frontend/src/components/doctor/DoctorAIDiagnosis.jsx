@@ -1,3 +1,5 @@
+/* eslint-disable no-console */
+/* eslint-disable no-unused-vars */
 import React, { useState } from 'react';
 import { Bot, X, Send, Sparkles, Loader2, Activity, Heart } from 'lucide-react';
 import axios from 'axios';

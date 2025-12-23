@@ -1,4 +1,5 @@
-﻿// frontend/src/components/patient/MedicalRecordCard.jsx
+﻿/* eslint-disable no-unused-vars */
+// frontend/src/components/patient/MedicalRecordCard.jsx
 import React from 'react';
 import { FileText, User, Calendar, Eye, Download, Pill } from 'lucide-react';
 import { formatDate, formatDateTime } from '../../utils/helpers';

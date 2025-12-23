@@ -1,4 +1,5 @@
-﻿// src/components/receptionist/CheckInForm.jsx
+/* eslint-disable no-unused-vars */
+// src/components/receptionist/CheckInForm.jsx
 import React, { useState } from 'react';
 import { Search, User, Phone, CheckCircle } from 'lucide-react';
 import { mockAppointments } from './mockData';

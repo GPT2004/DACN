@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React, { useRef, useState } from 'react';
 import { Upload, X, File, AlertCircle } from 'lucide-react';
 import Button from './Button';

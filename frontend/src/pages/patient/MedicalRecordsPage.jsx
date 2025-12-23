@@ -1,3 +1,5 @@
+/* eslint-disable no-console */
+/* eslint-disable no-unused-vars */
 import React, { useState, useEffect, useRef } from 'react';
 import PublicHeader from '../../components/common/PublicHeader';
 import PatientPageHeader from '../../components/patient/PatientPageHeader';

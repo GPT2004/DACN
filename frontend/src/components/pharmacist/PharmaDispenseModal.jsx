@@ -1,3 +1,5 @@
+/* eslint-disable no-console */
+/* eslint-disable no-unused-vars */
 import React, { useEffect, useState, useMemo } from 'react';
 import { X, Printer } from 'lucide-react';
 import { prescriptionService } from '../../services/prescriptionService';

@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 // frontend/src/context/NotificationContext.jsx
 import React, { createContext, useState, useContext, useCallback } from 'react';
 import { notificationService } from '../services/notificationService';

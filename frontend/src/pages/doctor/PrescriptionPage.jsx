@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from 'react';
 import PrescriptionForm from '../../components/doctor/PrescriptionForm';
 import { prescriptionService } from '../../services/prescriptionService';

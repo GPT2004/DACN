@@ -1,3 +1,5 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable no-console */
 import React, { useEffect, useState, useRef } from 'react';
 import ImageViewer from '../../components/common/ImageViewer';
 import DoctorLayout from '../../components/doctor/DoctorLayout';

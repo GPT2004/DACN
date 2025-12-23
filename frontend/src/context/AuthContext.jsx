@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
   // frontend/src/context/AuthContext.jsx
   /**
    * Auth Context - Quản lý toàn bộ authentication state

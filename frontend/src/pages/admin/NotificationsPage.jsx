@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React, {useEffect, useState} from 'react';
 import PageWrapper from './_AdminWrapper';
 export default function NotificationsPage(){

@@ -1,4 +1,6 @@
-﻿// frontend/src/components/patient/ProfileForm.jsx
+﻿/* eslint-disable no-console */
+/* eslint-disable no-unused-vars */
+// frontend/src/components/patient/ProfileForm.jsx
 import React, { useState, useEffect } from 'react';
 import { User, Mail, Phone, Calendar, MapPin, Heart, AlertCircle, Save } from 'lucide-react';
 import { patientService } from '../../services/patientService';

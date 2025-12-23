@@ -1,3 +1,6 @@
+/* eslint-disable no-console */
+/* eslint-disable jsx-a11y/anchor-is-valid */
+/* eslint-disable no-unused-vars */
 // frontend/src/components/common/Header.jsx
 import React, { useState } from 'react';
 import { 

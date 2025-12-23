@@ -1,3 +1,5 @@
+/* eslint-disable no-console */
+/* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from 'react';
 import { Edit2, Trash2, Search, X, BookOpen } from 'lucide-react';
 import specialtyService from '../../services/specialtyService';

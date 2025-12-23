@@ -58,8 +58,34 @@ export default function AppointmentDetailModal({ appointment, onClose, onUpdate 
   const formatTime = (time) => {
     if (!time) return 'N/A';
     try {
-      const t = new Date(time);
-      return t.toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit' });
+      // String in HH:mm or HH:mm:ss
+      if (typeof time === 'string') {
+        const m = time.match(/^(\d{1,2}):(\d{2})(?::\d{2})?/);
+        if (m) return `${m[1].padStart(2, '0')}:${m[2]}`;
+        const d = new Date(time);
+        if (!isNaN(d.getTime())) {
+          const iso = d.toISOString();
+          return `${iso.substring(11, 13)}:${iso.substring(14, 16)}`;
+        }
+        return time;
+      }
+      // Date object (Prisma TIME becomes Date anchored at 1970-01-01 UTC)
+      if (time instanceof Date) {
+        const iso = time.toISOString();
+        return `${iso.substring(11, 13)}:${iso.substring(14, 16)}`;
+      }
+      // Numeric timestamp (ms or seconds)
+      if (typeof time === 'number') {
+        const ms = time < 1e12 ? time * 1000 : time;
+        const d = new Date(ms);
+        const iso = d.toISOString();
+        return `${iso.substring(11, 13)}:${iso.substring(14, 16)}`;
+      }
+      // Plain object with hours/minutes
+      if (typeof time === 'object' && time.hours !== undefined && time.minutes !== undefined) {
+        return `${String(time.hours).padStart(2, '0')}:${String(time.minutes).padStart(2, '0')}`;
+      }
+      return String(time);
     } catch {
       return 'N/A';
     }

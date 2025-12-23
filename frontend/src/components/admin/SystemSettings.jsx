@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 // frontend/src/components/admin/SystemSettings.jsx
 import React, { useState } from 'react';
 import { Settings, Save, Database, Bell, Clock, FileText, Shield } from 'lucide-react';

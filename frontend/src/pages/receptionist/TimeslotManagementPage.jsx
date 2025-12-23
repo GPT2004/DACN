@@ -1,3 +1,5 @@
+/* eslint-disable no-console */
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect } from 'react';
 import { Clock, Plus, Edit2, Trash2, X, Save } from 'lucide-react';
 

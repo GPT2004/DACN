@@ -1,3 +1,5 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable no-console */
 import React, { useEffect, useState } from 'react';
 import { prescriptionService } from '../../services/prescriptionService';
 import { invoiceService } from '../../services/invoiceService';

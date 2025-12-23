@@ -1,3 +1,5 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable no-console */
 import React, { useEffect, useState } from 'react';
 import AdminDashboardLayout from '../../components/layout/AdminDashboardLayout';
 import { useAuth } from '../../context/AuthContext';
@@ -11,6 +13,39 @@ export default function DoctorDashboard() {
   const [resolvedDoctorIdState, setResolvedDoctorIdState] = useState(null);
 
   const doctorId = user?.doctors?.[0]?.id || user?.doctor_id || null;
+
+  // Robust formatter for TIME fields
+  const formatTimeHHmm = (time) => {
+    if (!time) return '';
+    try {
+      if (typeof time === 'string') {
+        const m = time.match(/^(\d{1,2}):(\d{2})(?::\d{2})?/);
+        if (m) return `${m[1].padStart(2, '0')}:${m[2]}`;
+        const d = new Date(time);
+        if (!isNaN(d.getTime())) {
+          const iso = d.toISOString();
+          return `${iso.substring(11, 13)}:${iso.substring(14, 16)}`;
+        }
+        return time;
+      }
+      if (time instanceof Date) {
+        const iso = time.toISOString();
+        return `${iso.substring(11, 13)}:${iso.substring(14, 16)}`;
+      }
+      if (typeof time === 'number') {
+        const ms = time < 1e12 ? time * 1000 : time;
+        const d = new Date(ms);
+        const iso = d.toISOString();
+        return `${iso.substring(11, 13)}:${iso.substring(14, 16)}`;
+      }
+      if (typeof time === 'object' && time?.hours !== undefined && time?.minutes !== undefined) {
+        return `${String(time.hours).padStart(2, '0')}:${String(time.minutes).padStart(2, '0')}`;
+      }
+      return String(time);
+    } catch {
+      return '';
+    }
+  };
 
   useEffect(() => {
     (async () => {
@@ -124,7 +159,7 @@ export default function DoctorDashboard() {
                     <div className="font-medium">{a.patient?.user?.full_name || 'Bệnh nhân'}</div>
                     <div className="text-sm text-gray-500">
                       {a.appointment_date ? new Date(a.appointment_date).toLocaleDateString('vi-VN') + ' ' : ''}
-                      {typeof a.appointment_time === 'string' ? a.appointment_time.slice(0,5) : a.appointment_time} — {a.status}
+                      {formatTimeHHmm(a.appointment_time || a.timeslot?.start_time)} — {a.status}
                     </div>
                   </div>
                   <div className="text-sm text-gray-500">Phòng: {a.timeslot?.room_id || '-'}</div>

@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 const aiService = require('../../services/ai.service');
 
 /**

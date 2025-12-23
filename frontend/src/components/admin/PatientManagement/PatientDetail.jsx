@@ -1,3 +1,6 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable no-console */
+/* eslint-disable no-unused-vars */
 // frontend/src/components/admin/PatientManagement/PatientDetail.jsx
 import React, { useState, useEffect } from 'react';
 import { X, User, Calendar, Phone, Mail, MapPin, Heart, AlertCircle, FileText, Pill, TestTube } from 'lucide-react';

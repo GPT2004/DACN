@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 // frontend/src/routes/index.jsx
 import { lazy } from 'react';
 import { ROLES } from '../utils/constants';

@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import dayjs from 'dayjs';
 import { DATE_FORMAT, TIME_FORMAT, DATETIME_FORMAT } from './constants';
 

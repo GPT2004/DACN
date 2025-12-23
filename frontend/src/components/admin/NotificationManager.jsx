@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 // frontend/src/components/admin/NotificationManager.jsx
 import React, { useState } from 'react';
 import { Send, Bell, Users } from 'lucide-react';

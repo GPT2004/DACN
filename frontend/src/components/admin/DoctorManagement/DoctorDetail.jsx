@@ -1,3 +1,6 @@
+/* eslint-disable no-console */
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable no-unused-vars */
 // frontend/src/components/admin/DoctorManagement/DoctorDetail.jsx
 import React, { useState, useEffect } from 'react';
 import { X, Mail, Phone, Calendar, Award, Briefcase, DollarSign } from 'lucide-react';

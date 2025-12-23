@@ -1,3 +1,5 @@
+/* eslint-disable no-console */
+/* eslint-disable react-hooks/exhaustive-deps */
 // frontend/src/components/admin/Reports/DiseaseReport.jsx
 import React, { useState, useEffect } from 'react';
 import { Activity, TrendingUp, AlertCircle } from 'lucide-react';

@@ -1,4 +1,5 @@
-﻿// frontend/src/components/patient/PrescriptionCard.jsx
+﻿/* eslint-disable no-unused-vars */
+// frontend/src/components/patient/PrescriptionCard.jsx
 import React from 'react';
 import { Pill, Calendar, User, FileText, Download, CheckCircle, Clock, AlertCircle } from 'lucide-react';
 import { formatDate, formatCurrency } from '../../utils/helpers';

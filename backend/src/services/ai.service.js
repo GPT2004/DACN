@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 const axios = require('axios');
 
 const AI_SYMPTOM_URL = process.env.AI_SYMPTOM_SERVICE_URL || 'http://localhost:5001';

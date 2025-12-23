@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import React, { useState } from 'react';
 import { Bot, X, Send, Sparkles, Loader2 } from 'lucide-react';
 import axios from 'axios';

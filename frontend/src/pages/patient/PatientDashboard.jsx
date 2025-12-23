@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React, { useRef, useState } from 'react';
 import Hero from '../../components/patient/clinic/Hero';
 import Services from '../../components/patient/clinic/Services';

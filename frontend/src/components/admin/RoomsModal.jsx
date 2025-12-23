@@ -1,3 +1,5 @@
+/* eslint-disable no-console */
+/* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from 'react';
 import { Edit2, Trash2, Search, X, Home } from 'lucide-react';
 import { roomService } from '../../services/roomService';

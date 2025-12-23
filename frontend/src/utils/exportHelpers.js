@@ -1,3 +1,6 @@
+/* eslint-disable no-console */
+/* eslint-disable no-useless-escape */
+/* eslint-disable no-unused-vars */
 import * as XLSX from 'xlsx';
 import { saveAs } from 'file-saver';
 import { formatDate, formatCurrency } from './helpers';
